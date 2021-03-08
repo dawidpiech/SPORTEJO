@@ -1,24 +1,41 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const user = new mongoose.Schema({
-  mail: {
+  email: {
     type: String,
-    required: [true, "Please provide your email!"],
+    required: true,
     unique: true,
   },
   username: {
     type: String,
-    required: [true, "Without name we wont know who you are !"],
+    required: true,
   },
   password: {
     type: String,
-    required: [true, "Please provide a password!"],
+    required: true,
+    minlength: 8,
   },
   avatar: {
     type: String,
+    required: true,
   },
+  objects: [
+    {
+      type: mongoose.Types.ObjectId,
+      required: false,
+      ref: "Object",
+    },
+  ],
+  favoriteObjects: [
+    {
+      type: mongoose.Types.ObjectId,
+      required: false,
+      ref: "Object",
+    },
+  ],
 });
+
+user.plugin(uniqueValidator);
 
 module.exports = mongoose.model("User", user);

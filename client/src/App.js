@@ -12,8 +12,10 @@ const App = () => {
     Axios({
       method: "POST",
       data: {
-        username: registerUsername,
-        password: registerPassword,
+        email: "email@dsa.pl",
+        username: "dawid",
+        avatar: "ścieżka",
+        password: "haslo1234568",
       },
       withCredentials: true,
       url: "http://localhost:8000/api/v1/users/register",
@@ -28,7 +30,7 @@ const App = () => {
         username: loginUsername,
         password: loginPassword,
       },
-      //withCredentials: true,
+      withCredentials: true,
       url: "http://localhost:8000/api/v1/users/login",
     }).then((res) => console.log(res));
   };
@@ -75,7 +77,7 @@ const App = () => {
       <div>
         <h1>Get User</h1>
         <button onClick={getUser}>Submit</button>
-        {data ? <h1>Welcome Back {data.username}</h1> : null}
+        {data ? <h1>Welcome Back {data.user}</h1> : null}
       </div>
     </div>
   );
