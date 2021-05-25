@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import "./Login.scss";
 import Axios from "axios";
 
-const App = () => {
+const Login = () => {
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginUsername, setLoginUsername] = useState("");
@@ -23,7 +24,6 @@ const App = () => {
   };
 
   const login = () => {
-    console.log(loginPassword, loginUsername);
     Axios({
       method: "POST",
       data: {
@@ -58,45 +58,18 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <div>
-        <h1>Register</h1>
-        <input
-          placeholder="username"
-          onChange={(e) => setRegisterUsername(e.target.value)}
-        />
-        <input
-          placeholder="password"
-          onChange={(e) => setRegisterPassword(e.target.value)}
-        />
-        <button onClick={register}>Submit</button>
-      </div>
-
-      <div>
-        <h1>Login</h1>
-        <input
-          placeholder="username"
-          onChange={(e) => setLoginUsername(e.target.value)}
-        />
-        <input
-          placeholder="password"
-          onChange={(e) => setLoginPassword(e.target.value)}
-        />
-        <button onClick={login}>Submit</button>
-      </div>
-
-      <div>
-        <h1>Get User</h1>
-        <button onClick={getUser}>Submit</button>
-        {data ? <h1>Welcome Back {data.userID}</h1> : ""}
-      </div>
-
-      <div>
-        <h1>Logout</h1>
-        <button onClick={logout}>Submit</button>
-      </div>
+    <div>
+      <input
+        placeholder="username"
+        onChange={(e) => setLoginUsername(e.target.value)}
+      />
+      <input
+        placeholder="password"
+        onChange={(e) => setLoginPassword(e.target.value)}
+      />
+      <button onClick={login}>Submit</button>
     </div>
   );
 };
 
-export default App;
+export default Login;

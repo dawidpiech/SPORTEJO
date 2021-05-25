@@ -1,0 +1,31 @@
+@import "./normalize.scss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+// SECTION
+// NOTE Used fonts
+// SECTION
+
+$primary-font: "Montserrat", "Open Sans", Helvetica, sans-serif;
+
+// SECTION
+// NOTE Used colours in scss
+// SECTION
+
+$darkPurple: #611b68;
+$purple: #961ca6;
+$blue: #024873;
+$white: #ffffff;
+$gray: #373737;
+
+$mediaPhoneSize: "768px";
+$mediaTabletSize: "1024px";
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  overflow: hidden;
+  font-family: $primary-font;
+}

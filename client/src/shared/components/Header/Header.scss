@@ -1,0 +1,65 @@
+@import "../../util/conf.scss";
+
+.header {
+  height: 70px;
+  overflow: hidden;
+  width: 100vw;
+
+  @media (max-width: $mediaTabletSize) {
+    height: 140px;
+  }
+
+  .logo_header {
+    width: 400px;
+    height: 50px;
+    top: 10px;
+    right: 50%;
+    position: absolute;
+    background: url("../../../img/full_logo.png") center center no-repeat;
+    background-size: auto 100%;
+    transform: translateX(50%);
+
+    @media (max-width: $mediaTabletSize) {
+      width: 100%;
+    }
+  }
+  .buttons_header {
+    top: 12.5px;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+    right: 30px;
+    position: absolute;
+
+    @media (max-width: $mediaTabletSize) {
+      width: 500px;
+      top: 75px;
+      right: 50%;
+      transform: translateX(calc(50% + 50px));
+    }
+
+    @media (max-width: $mediaPhoneSize) {
+      width: 100vw;
+      transform: translateX(50%);
+    }
+
+    .nav__link {
+      color: $white;
+      text-decoration: none;
+    }
+    .button__primary--header {
+      height: 45px;
+      margin: 0 10px;
+      color: $white;
+      font-weight: 900;
+      font-size: 12pt;
+
+      @media (max-width: $mediaTabletSize) {
+        margin: 0 20px;
+      }
+      @media (max-width: $mediaPhoneSize) {
+        margin: 0 10px;
+      }
+    }
+  }
+}
