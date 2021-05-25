@@ -65,7 +65,7 @@ const signup = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (err) {
-    console.log(createdUser);
+    console.log(err);
     const error = new HttpError(
       "Rejestracja nie powiodła się, spróbuj ponownie później.",
       500
@@ -78,6 +78,7 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  console.log("działą");
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
     if (!user) res.send("Sprawdź login lub hasło!");
@@ -92,9 +93,24 @@ const login = async (req, res, next) => {
 
 const getUser = async (req, res) => {
   let userID = req.session.passport;
-  res.send(userID); // The req.user stores the entire user that has been authenticated inside of it.
+  let data = {
+    authenticated: req.isAuthenticated(),
+    user: userID.user,
+  };
+  res.send(data); // The req.user stores the entire user that has been authenticated inside of it.
+};
+
+const logout = async (req, res) => {
+  req.logout();
+  req.session.destroy(function (err) {
+    if (err) {
+      return next(err);
+    }
+    return res.send({ authenticated: req.isAuthenticated() });
+  });
 };
 
 exports.getUser = getUser;
 exports.login = login;
 exports.register = signup;
+exports.logout = logout;

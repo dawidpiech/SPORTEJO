@@ -46,6 +46,17 @@ const App = () => {
     });
   };
 
+  const logout = () => {
+    Axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:8000/api/v1/users/logout",
+    }).then((res) => {
+      console.log(res.data);
+      setData("Wylogowany");
+    });
+  };
+
   return (
     <div className="App">
       <div>
@@ -77,7 +88,12 @@ const App = () => {
       <div>
         <h1>Get User</h1>
         <button onClick={getUser}>Submit</button>
-        {data ? <h1>Welcome Back {data.user}</h1> : null}
+        {data ? <h1>Welcome Back {data.userID}</h1> : ""}
+      </div>
+
+      <div>
+        <h1>Logout</h1>
+        <button onClick={logout}>Submit</button>
       </div>
     </div>
   );
