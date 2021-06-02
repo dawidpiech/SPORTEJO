@@ -2,7 +2,10 @@
 
 .home_container {
   margin: 0;
-  padding: 0;
+
+  @media (max-width: $mediaTabletSize) {
+    padding: 0 0 90px 0;
+  }
 
   .home_photo {
     background: url("../img/home_photo.jpg") center center;
@@ -21,12 +24,13 @@
       padding-left: 120px;
       font-size: 24pt;
       font-weight: 900;
-      top: 60%;
+      top: 70%;
       color: $white;
       width: 470px;
       height: 50px;
 
       @media (max-width: $mediaPhoneSize) {
+        top: 60%;
         padding-left: 20px;
         width: 270px;
       }
@@ -49,7 +53,7 @@
       padding-left: 120px;
       font-size: 14pt;
       font-weight: 900;
-      top: calc(60% + 60px);
+      top: calc(70% + 60px);
       color: $white;
       width: 420px;
       height: 50px;
@@ -143,6 +147,7 @@
     }
 
     .search_category_wrapper {
+      position: relative;
       height: calc(100% - 316px);
       overflow-y: scroll;
       padding-right: 10px;
@@ -166,8 +171,4 @@
       height: 10px;
     }
   }
-}
-
-.header {
-  display: none;
 }

@@ -1,2 +1,52 @@
-.registration {
+@import "../../shared/util/conf.scss";
+
+.registration_wrapper {
+  padding-left: 100px;
+  padding-bottom: 90px;
+  width: 100%;
+
+  @media (max-width: $mediaPhoneSize) {
+    padding-left: 0;
+  }
+
+  .registration_form {
+    margin-top: 100px;
+    background: $white;
+    box-shadow: 0px 8px 16px 3px rgba(105, 105, 105, 0.4);
+    border-radius: 50px;
+    padding: 40px;
+
+    @media (max-width: $mediaPhoneSize) {
+      margin: 50px 10px 0 10px;
+      padding: 30px 20px;
+    }
+
+    .registration_form_register_link {
+      font-weight: 900;
+      font-size: 18px;
+      text-align: center;
+      a {
+        display: inline;
+        padding: 0 5px;
+        color: $blue;
+      }
+    }
+
+    .primary_text_input {
+      background-color: rgba($gray, 0.1);
+      border-radius: 30px;
+      height: 50px;
+      padding: 0 30px;
+    }
+
+    #input_username {
+      margin: 10px 0;
+    }
+
+    .button__primary--registration {
+      margin-top: 20px;
+      font-weight: 900;
+      padding: 15px 0;
+    }
+  }
 }

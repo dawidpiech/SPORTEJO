@@ -2,9 +2,34 @@ const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
+const multer = require("multer");
 
 const User = require("../models/user");
 const HttpError = require("../models/http-error");
+
+const MIME_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+};
+
+const uploadAvatar = multer({
+  limits: 1000000,
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads/avatars");
+    },
+    filename: (req, file, cb) => {
+      const extension = MIME_TYPE_MAP[file.mimetype];
+      cb(null, Date.now() + "avatar" + "." + extension);
+    },
+  }),
+  fileFilter: (req, file, cb) => {
+    const isValid = !!MIME_TYPE_MAP[file.mimetype];
+    let error = isValid ? null : new Error("Invalid mime type!");
+    cb(error, isValid);
+  },
+});
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -17,7 +42,10 @@ const signup = async (req, res, next) => {
     );
   }
 
-  const { username, email, password, avatar } = req.body;
+  const username = req.body.username,
+    email = req.body.email,
+    password = req.body.password,
+    avatar = req.body.avatar;
 
   let existingUser;
   try {
@@ -25,19 +53,17 @@ const signup = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       "Rejestracja nie powiodła się, spróbuj ponownie później.",
-      500
+      520
     );
 
     return next(error);
   }
 
   if (existingUser) {
-    console.log(existingUser);
     const error = new HttpError(
       "Taki użytkownik już istnieje, jeśli to ty zaloguj się.",
-      422
+      430
     );
-
     return next(error);
   }
 
@@ -47,16 +73,17 @@ const signup = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       "Nie mogliśmy utworzyć takiego użytkownika proszę spróbuj ponownie",
-      500
+      502
     );
 
     return next(error);
   }
 
+  let a = "scieżka";
   let createdUser = new User({
     email,
     username,
-    avatar, ///req.file.path
+    avatar: req.file.filename, ///req.file.path
     password: hashedPassword,
     objects: [],
     favoriteObjects: [],
@@ -65,11 +92,11 @@ const signup = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (err) {
-    console.log(err);
     const error = new HttpError(
-      "Rejestracja nie powiodła się, spróbuj ponownie później.",
+      "Zapisywanie w bazie danych nie powiodło się, proszę spróbuj ponownie",
       500
     );
+    console.log(err);
 
     return next(error);
   }
@@ -78,14 +105,17 @@ const signup = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  console.log("działą");
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
-    if (!user) res.send("Sprawdź login lub hasło!");
+    if (!user) res.send({ status: false, comment: "Sprawdź login lub hasło!" });
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
-        res.send("Successfully Authenticated");
+        res.send({
+          status: true,
+          comment: "Zalogowano poprawnie!",
+          user: user,
+        });
       });
     }
   })(req, res, next);
@@ -114,3 +144,4 @@ exports.getUser = getUser;
 exports.login = login;
 exports.register = signup;
 exports.logout = logout;
+exports.uploadAvatar = uploadAvatar;

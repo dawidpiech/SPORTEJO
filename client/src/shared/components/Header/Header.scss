@@ -62,4 +62,33 @@
       }
     }
   }
+
+  .user_menu {
+    top: 12.5px;
+    width: 350px;
+    display: flex;
+    justify-content: flex-end;
+    right: 30px;
+    position: absolute;
+
+    .user_favorites {
+      display: block;
+      margin-right: 20px;
+      text-decoration: none;
+      color: $gray;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      margin: 10px 0;
+      //background: url("../../../img/full_logo.png") center center no-repeat;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 }

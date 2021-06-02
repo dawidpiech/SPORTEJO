@@ -1,0 +1,45 @@
+@import "./../../../shared/util/conf.scss";
+.form-control_wrapper {
+  margin: 1rem 0;
+  color: $white;
+  border: none;
+}
+
+.form-control_wrapper label,
+.form-control_wrapper input,
+.form-control_wrapper textarea {
+  display: block;
+}
+
+.form-control_wrapper label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form-control_wrapper input,
+.form-control_wrapper textarea {
+  width: 100%;
+  background-color: rgba($gray, 0.1);
+  border: none;
+  border-radius: 30px;
+  height: 50px;
+  padding: 0 30px;
+}
+
+.form-control_wrapper input:focus,
+.form-control_wrapper textarea:focus {
+  outline: none;
+  background: #ebebeb;
+  border-color: #510077;
+}
+
+.form-control_wrapper--invalid label,
+.form-control_wrapper--invalid p {
+  color: red;
+}
+
+.form-control_wrapper--invalid input,
+.form-control_wrapper--invalid textarea {
+  border-color: red;
+  background: #ffd1d1;
+}

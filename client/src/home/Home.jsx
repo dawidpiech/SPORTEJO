@@ -7,8 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Category from "./components/Category";
 
+import Loader from "../shared/components/Loader/Loader";
+
 const Home = () => {
   const [categories, setCategories] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   const a = [
     {
@@ -33,10 +36,6 @@ const Home = () => {
     },
   ];
 
-  const setStateOnLoad = () => {
-    setCategories(a);
-  };
-
   const submitSearch = (e) => {
     e.preventDefault();
     alert("asdfasd");
@@ -45,11 +44,19 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setStateOnLoad();
+    setCategories(a);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, []);
 
   return (
     <div className="home_container">
+      {isLoading ? (
+        <Loader active="loader--show"></Loader>
+      ) : (
+        <Loader active="loader--hide"></Loader>
+      )}
       <Row>
         <Col lg={7} className="home_photo">
           <div className="home_photo_title_wrapper">
@@ -72,7 +79,7 @@ const Home = () => {
           </div>
           <div className="search_wrapper">
             <p className="search_title">Let's go</p>
-            <Form className="authorization__form" onSubmit={submitSearch}>
+            <Form className="search_form" onSubmit={submitSearch}>
               <Form.Group>
                 <Form.Control
                   type="text"
