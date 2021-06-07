@@ -1,53 +1,82 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  componentDidMount,
+} from "react";
 import "./Home.scss";
 import { Row, Col, Form } from "react-bootstrap";
+import Axios from "axios";
 import Button from "../shared/components/FormElements/Button";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Category from "./components/Category";
+import { AuthContext } from "./../shared/context/auth-context";
+import { faFireAlt } from "@fortawesome/free-solid-svg-icons";
 
 import Loader from "../shared/components/Loader/Loader";
 
 const Home = () => {
   const [categories, setCategories] = useState("");
   const [isLoading, setLoading] = useState(true);
-
-  const a = [
-    {
-      id: "1",
-      name: "Football",
-      background: "red",
-    },
-    {
-      id: "2",
-      name: "Volleyball",
-      background: "blue",
-    },
-    {
-      id: "3",
-      name: "Basketball",
-      background: "orange",
-    },
-    {
-      id: "4",
-      name: "DUPA TEST",
-      background: "green",
-    },
-  ];
+  const auth = useContext(AuthContext);
+  const categoriesData = [];
 
   const submitSearch = (e) => {
     e.preventDefault();
-    alert("asdfasd");
-    console.log(e);
     window.location.href = e.target[0].value;
   };
 
+  const getCategories = () => {
+    Axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:8000/api/v1/objects/getCategories",
+    })
+      .then((res) => {
+        res.data.forEach((e) => {
+          let c = {
+            id: e._id,
+            name: e.name,
+            background: e.photo,
+          };
+
+          categoriesData.push(c);
+        });
+      })
+      .then(() => {
+        setCategories(categoriesData);
+      })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      });
+  };
+
+  const showMenu = (e) => {
+    e.target.nextElementSibling.classList.toggle("active");
+    e.target.nextElementSibling.classList.toggle("inactive");
+  };
+
+  const handleClickOutsideAvatar = (event) => {
+    let avatar = document.querySelector(".user_avatar");
+    let menu = document.querySelector(".home_user_menu");
+    if (
+      menu &&
+      !menu.contains(event.target) &&
+      !avatar.contains(event.target)
+    ) {
+      let avatarHandler = document.querySelector(".home_user_menu");
+      avatarHandler.classList.add("inactive");
+      avatarHandler.classList.remove("active");
+    }
+  };
+
   useEffect(() => {
-    setCategories(a);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    getCategories();
+    document.addEventListener("mousedown", handleClickOutsideAvatar);
   }, []);
 
   return (
@@ -69,14 +98,43 @@ const Home = () => {
           </div>
         </Col>
         <Col lg={5} className="home_search">
-          <div className="home_buttons">
-            <NavLink to="/login">
-              <Button className="home_button">Login</Button>
-            </NavLink>
-            <NavLink to="/register">
-              <Button className="home_button">Register</Button>
-            </NavLink>
-          </div>
+          {!auth.isLoggedIn && (
+            <div className="home_buttons">
+              <NavLink to="/login">
+                <Button className="home_button">Login</Button>
+              </NavLink>
+              <NavLink to="/register">
+                <Button className="home_button">Register</Button>
+              </NavLink>
+            </div>
+          )}
+          {auth.isLoggedIn && (
+            <div className="home_user_bar">
+              <NavLink to="/favorites" className="user_favorites">
+                <FontAwesomeIcon icon={faFireAlt} />
+              </NavLink>
+              <div className="user_name">Hi, {auth.userName}</div>
+              <div
+                className="user_avatar"
+                style={{
+                  background:
+                    "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
+                  backgroundPosition: "center center",
+                  backgroundSize: "cover",
+                }}
+                onClick={showMenu}
+              ></div>
+
+              <div className="home_user_menu inactive">
+                <NavLink to="/editProfile" className="edit_profile">
+                  Edytuj profil
+                </NavLink>
+                <Button onClick={auth.logout} className={"logout_button"}>
+                  Wyloguj
+                </Button>
+              </div>
+            </div>
+          )}
           <div className="search_wrapper">
             <p className="search_title">Let's go</p>
             <Form className="search_form" onSubmit={submitSearch}>

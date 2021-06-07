@@ -5,7 +5,7 @@
   height: 100%;
   position: absolute;
   background: $white;
-  z-index: 10000;
+  z-index: 8999;
   margin: 0;
   top: 0;
   transition: 1s;
@@ -14,7 +14,7 @@
   .loader {
     width: 40px;
     height: 40px;
-    margin-left: calc(50% - 20px);
+    margin-left: calc(50% - 40px);
     text-align: center;
     bottom: calc(50% - 20px);
     animation: sk-rotate 2s infinite linear;
@@ -61,7 +61,7 @@
 }
 
 .loader--hide {
-  top: -100%;
+  top: -150%;
 }
 
 .loader--show {

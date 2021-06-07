@@ -6,6 +6,7 @@ import { NavLink, Redirect } from "react-router-dom";
 import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import Button from "./../../shared/components/FormElements/Button";
 import ImageUpload from "./../../shared/components/FormElements/ImageUpload";
+import { useHistory } from "react-router-dom";
 
 import { useForm } from "./../../shared/hooks/form-hook";
 import {
@@ -15,9 +16,15 @@ import {
   VALIDATOR_SAMEVALUE,
 } from "./../../shared/util/validators";
 import Input from "./../../shared/components/FormElements/Input";
+import LoadingSpinner from "../../shared/components/others/LoadingSpinner";
 
 const Registration = () => {
   const [isLoading, setLoading] = useState(true);
+  const [registerState, setRegisterState] = useState({
+    status: "",
+    message: "",
+  });
+  const [isLoadingSpinner, setLoadingSpinner] = useState(false);
 
   const [formState, inputHandler] = useForm(
     {
@@ -41,7 +48,10 @@ const Registration = () => {
     false
   );
 
+  let history = useHistory();
+
   const register = (e) => {
+    setLoadingSpinner(true);
     e.preventDefault();
 
     const formData = new FormData();
@@ -56,16 +66,32 @@ const Registration = () => {
       withCredentials: true,
       url: "http://localhost:8000/api/v1/users/register",
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        setRegisterState({
+          status: true,
+          message: res.data,
+        });
+        setLoadingSpinner(false);
+        history.push("/login");
+      })
       .catch((error) => {
-        console.log(error.response.data);
+        let message = error.response.data.slice(
+          error.response.data.search("Error: ") + 6,
+          error.response.data.search("<br>")
+        );
+        setLoadingSpinner(false);
+
+        setRegisterState({
+          status: false,
+          message: message,
+        });
       });
   };
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   // const login = () => {
@@ -110,21 +136,22 @@ const Registration = () => {
         <Loader active="loader--hide"></Loader>
       )}
       <Container>
+        <img src="http://localhost:8000/uploads/avatars/64f8b45b-f2e0-489c-ac54-4344b0d284fc.jpeg" />
         <Row className="justify-content-md-center pb-5">
           <Col xl={5} className="registration_form">
             <p className="registration_form_register_link">
               Masz już konto?
               <NavLink to="/register">Zaloguj się!</NavLink>
             </p>
-            {/* {loginStatus.message !== "" ? (
-              <Alert variant={loginStatus.status ? "success" : "danger"}>
-                {loginStatus.message}
-              </Alert>
-            ) : (
-              ""
-            )} */}
             <Form className="authorization__form" onSubmit={register}>
               <Form.Group>
+                {registerState.message !== "" ? (
+                  <Alert variant={registerState.status ? "success" : "danger"}>
+                    {registerState.message}
+                  </Alert>
+                ) : (
+                  ""
+                )}
                 <ImageUpload
                   center
                   id="avatar"
@@ -175,6 +202,7 @@ const Registration = () => {
                   className={"button__primary--login"}
                   disabled={!formState.isValid}
                 >
+                  {isLoadingSpinner && <LoadingSpinner></LoadingSpinner>}
                   Zarejestruj
                 </Button>
               </Form.Group>

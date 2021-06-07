@@ -29,7 +29,7 @@ const MainNavigation = () => (
         </NavLink>
       </li>
       <li>
-        <NavLink to="/" className={"nav__link"}>
+        <NavLink to="/favorites" className={"nav__link"}>
           <FontAwesomeIcon icon={faFireAlt} />
         </NavLink>
       </li>

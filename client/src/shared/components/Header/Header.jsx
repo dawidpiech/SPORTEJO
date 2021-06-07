@@ -26,7 +26,6 @@ const Header = (props) => {
   if (location.pathname !== "/") {
     return (
       <div className="header">
-        {console.log()}
         <NavLink to="/" className={"nav__link"}>
           <div className="logo_header"></div>
         </NavLink>

@@ -3,6 +3,7 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const multer = require("multer");
+const { v4: uuid } = require("uuid");
 
 const User = require("../models/user");
 const HttpError = require("../models/http-error");
@@ -21,7 +22,7 @@ const uploadAvatar = multer({
     },
     filename: (req, file, cb) => {
       const extension = MIME_TYPE_MAP[file.mimetype];
-      cb(null, Date.now() + "avatar" + "." + extension);
+      cb(null, uuid() + "." + extension);
     },
   }),
   fileFilter: (req, file, cb) => {
@@ -79,7 +80,6 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  let a = "scieżka";
   let createdUser = new User({
     email,
     username,
@@ -101,7 +101,7 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.send("Konto zostało utworzone!");
+  res.send("Konto zostało utworzone! Zaloguj się.");
 };
 
 const login = async (req, res, next) => {
@@ -111,10 +111,17 @@ const login = async (req, res, next) => {
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
+        let userData = {
+          id: user._id,
+          avatar: user.avatar,
+          email: user.email,
+          favoriteObjects: user.favoriteObjects,
+          username: user.username,
+        };
         res.send({
           status: true,
           comment: "Zalogowano poprawnie!",
-          user: user,
+          user: userData,
         });
       });
     }

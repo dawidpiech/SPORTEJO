@@ -111,6 +111,93 @@
       }
     }
 
+    .home_user_bar {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 30px;
+      position: relative;
+
+      .user_favorites {
+        text-decoration: none;
+        color: $gray;
+        margin-right: 40px;
+        align-self: center;
+        font-size: 18pt;
+
+        :hover {
+          color: $purple;
+        }
+      }
+
+      .user_name {
+        justify-content: center;
+        align-self: center;
+        font-size: 14pt;
+        font-weight: 900;
+      }
+
+      .user_avatar {
+        width: 50px;
+        height: 50px;
+        margin-left: 20px;
+        border-radius: 25px;
+        cursor: pointer;
+      }
+
+      .home_user_menu {
+        width: 250px;
+        background: $white;
+        position: absolute;
+        margin-top: 60px;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0px 6px 11px 0px #555555;
+        border-radius: 20px;
+        padding: 10px;
+
+        .edit_profile {
+          text-decoration: none;
+          color: $gray;
+          align-self: center;
+          padding: 5px;
+          margin: 10px 0;
+          font-weight: 600;
+
+          &:hover {
+            color: $purple;
+            font-weight: 900;
+          }
+        }
+
+        .logout_button {
+          font-weight: 900;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          right: 10px;
+          top: -10px;
+          width: 30px;
+          height: 30px;
+          display: block;
+          transform: rotate(45deg);
+          background: inherit;
+          box-shadow: 0px -9px 20px -15px #585858;
+        }
+      }
+
+      .active {
+        display: flex;
+      }
+
+      .inactive {
+        display: none;
+      }
+    }
+
     .search_wrapper {
       position: relative;
       padding: 30px 0;

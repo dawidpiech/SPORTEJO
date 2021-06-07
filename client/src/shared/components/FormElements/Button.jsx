@@ -2,7 +2,10 @@ import React from "react";
 import "./Button.scss";
 
 const Button = (props) => (
-  <button className={`button__primary ${props.className}`}>
+  <button
+    className={`button__primary ${props.className}`}
+    disabled={props.disabled}
+  >
     {props.children}
   </button>
 );

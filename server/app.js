@@ -3,12 +3,12 @@ const morgan = require("morgan");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const passport = require("passport");
-const passportLocal = require("passport-local").Strategy;
-const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const bodyParser = require("body-parser");
+
+const path = require("path");
 
 const authRoutes = require("./routes/authRoutes");
+const objectsRoutes = require("./routes/objectsRoutes");
 const AppError = require("./utils/appError");
 
 const app = express();
@@ -51,10 +51,21 @@ const limiter = rateLimit({
     "Too many request from your IP, to avoid attacks please try again later!",
 });
 
+app.use("/uploads/avatars", express.static(path.join("uploads", "avatars")));
+app.use(
+  "/uploads/objectImages",
+  express.static(path.join("uploads", "objectImages"))
+);
+app.use(
+  "/images/categories",
+  express.static(path.join("images", "categories"))
+);
+
 app.use("/api", limiter);
 app.use(express.json({ limit: "10kb" }));
 
 app.use("/api/v1/users", authRoutes);
+app.use("/api/v1/objects", objectsRoutes);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

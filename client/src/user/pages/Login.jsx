@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Login.scss";
 import Axios from "axios";
 import Loader from "../../shared/components/Loader/Loader";
 import { NavLink, Redirect } from "react-router-dom";
 import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import Button from "../../shared/components/FormElements/Button";
+import { AuthContext } from "./../../shared/context/auth-context";
+import LoadingSpinner from "../../shared/components/others/LoadingSpinner";
 
 import { useForm } from "./../../shared/hooks/form-hook";
 import {
@@ -15,6 +17,8 @@ import {
 import Input from "./../../shared/components/FormElements/Input";
 
 const Login = () => {
+  const authContext = useContext(AuthContext);
+  const [isLoadingSpinner, setLoadingSpinner] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [loginStatus, setLoginStatus] = useState({
     status: "",
@@ -37,6 +41,7 @@ const Login = () => {
 
   const login = (e) => {
     e.preventDefault();
+    setLoadingSpinner(true);
     Axios({
       method: "POST",
       data: {
@@ -45,16 +50,21 @@ const Login = () => {
       },
       withCredentials: true,
       url: "http://localhost:8000/api/v1/users/login",
-    }).then((res) => {
-      setLoginStatus({
-        status: res.data.status,
-        message: res.data.comment,
-      });
+    })
+      .then((res) => {
+        setLoginStatus({
+          status: res.data.status,
+          message: res.data.comment,
+        });
 
-      if ((res.data.status = true)) {
-        localStorage.setItem("userData", JSON.stringify(res.data.user));
-      }
-    });
+        if ((res.data.status = true)) {
+          localStorage.setItem("userData", JSON.stringify(res.data.user));
+        }
+      })
+      .then(() => {
+        authContext.login();
+        setLoadingSpinner(false);
+      });
   };
 
   useEffect(() => {
@@ -63,7 +73,7 @@ const Login = () => {
     }, 2000);
   }, []);
 
-  if (loginStatus.status) {
+  if (authContext.isLoggedIn) {
     return <Redirect to="/dashboard" />;
   } else {
     return (
@@ -111,6 +121,7 @@ const Login = () => {
                     className={"button__primary--login"}
                     disabled={!formState.isValid}
                   >
+                    {isLoadingSpinner && <LoadingSpinner></LoadingSpinner>}
                     Zaloguj
                   </Button>
                 </Form.Group>

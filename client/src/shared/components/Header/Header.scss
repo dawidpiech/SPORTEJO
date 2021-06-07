@@ -4,6 +4,9 @@
   height: 70px;
   overflow: hidden;
   width: 100vw;
+  z-index: 9999;
+  position: absolute;
+  background: $white;
 
   @media (max-width: $mediaTabletSize) {
     height: 140px;
