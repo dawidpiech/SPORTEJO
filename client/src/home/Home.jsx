@@ -129,7 +129,10 @@ const Home = () => {
                 <NavLink to="/editProfile" className="edit_profile">
                   Edytuj profil
                 </NavLink>
-                <Button onClick={auth.logout} className={"logout_button"}>
+                <Button
+                  onClick={auth.logout}
+                  className={"button__primary--logout"}
+                >
                   Wyloguj
                 </Button>
               </div>

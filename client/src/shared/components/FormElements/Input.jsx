@@ -43,6 +43,7 @@ const Input = (props) => {
   const focusHandler = () => {
     dispatch({ type: "TOUCH" });
   };
+
   const element =
     props.element === "input" ? (
       <input
@@ -60,6 +61,7 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={focusHandler}
         value={inputState.value}
+        placeholder={props.placeholder}
       />
     );
 
@@ -72,7 +74,9 @@ const Input = (props) => {
       }`}
     >
       <label htmlFor={props.id}>{props.label}</label>
+
       {element}
+
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );

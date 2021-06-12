@@ -44,21 +44,23 @@ const object = new mongoose.Schema({
   },
   openingHour: {
     type: String,
+    required: true,
   },
   closingTime: {
     type: String,
+    required: true,
   },
-  convenience: [
+  amenities: [
     {
       type: mongoose.Types.ObjectId,
       required: false,
-      ref: "Convenience",
+      ref: "Amenities",
     },
   ],
   openingDays: [
     {
       type: mongoose.Types.ObjectId,
-      required: false,
+      required: true,
       ref: "Day",
     },
   ],

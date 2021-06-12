@@ -10,6 +10,10 @@
     padding-left: 0;
   }
 
+  @media (max-width: $mediaTabletSize) {
+    margin-top: 140px;
+  }
+
   .registration_form {
     margin-top: 100px;
     background: $white;

@@ -1,0 +1,35 @@
+@import "./../../../shared/util/conf.scss";
+.input-checkbox-wrapper {
+  width: 100%;
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    color: rgba($gray / 0.8, 1);
+    font-weight: 600;
+    font-size: 10pt;
+    cursor: pointer;
+
+    span {
+      align-self: center;
+    }
+    input {
+      width: 20px;
+      height: 20px;
+      background: rgba($gray, 0.1);
+      border-radius: 5px;
+      appearance: none;
+      margin-right: 20px;
+      border: none;
+      outline: none;
+      left: -5px;
+      top: -5px;
+      cursor: pointer;
+
+      &:checked {
+        background: rgba($purple, 0.3);
+      }
+    }
+  }
+}

@@ -24,7 +24,7 @@ const MainNavigation = () => (
         </NavLink>
       </li>
       <li>
-        <NavLink to="/" className={"nav__link"}>
+        <NavLink to="/addNewObject" className={"nav__link"}>
           <FontAwesomeIcon icon={faPlusCircle} />
         </NavLink>
       </li>

@@ -94,40 +94,6 @@ const Registration = () => {
     }, 1000);
   }, []);
 
-  // const login = () => {
-  //   Axios({
-  //     method: "POST",
-  //     data: {
-  //       username: loginUsername,
-  //       password: loginPassword,
-  //     },
-  //     withCredentials: true,
-  //     url: "http://localhost:8000/api/v1/users/login",
-  //   }).then((res) => console.log(res));
-  // };
-
-  // const getUser = () => {
-  //   Axios({
-  //     method: "GET",
-  //     withCredentials: true,
-  //     url: "http://localhost:8000/api/v1/users/getUser",
-  //   }).then((res) => {
-  //     setData(res.data);
-  //     console.log(res.data);
-  //   });
-  // };
-
-  // const logout = () => {
-  //   Axios({
-  //     method: "GET",
-  //     withCredentials: true,
-  //     url: "http://localhost:8000/api/v1/users/logout",
-  //   }).then((res) => {
-  //     console.log(res.data);
-  //     setData("Wylogowany");
-  //   });
-  // };
-
   return (
     <div className="registration_wrapper">
       {isLoading ? (
@@ -136,7 +102,6 @@ const Registration = () => {
         <Loader active="loader--hide"></Loader>
       )}
       <Container>
-        <img src="http://localhost:8000/uploads/avatars/64f8b45b-f2e0-489c-ac54-4344b0d284fc.jpeg" />
         <Row className="justify-content-md-center pb-5">
           <Col xl={5} className="registration_form">
             <p className="registration_form_register_link">

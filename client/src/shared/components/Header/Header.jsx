@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Header.scss";
 import Axios from "axios";
 import { NavLink, useLocation } from "react-router-dom";
@@ -12,16 +12,28 @@ const Header = (props) => {
   const auth = useContext(AuthContext);
   const location = useLocation();
 
-  const logout = () => {
-    Axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:8000/api/v1/users/logout",
-    }).then((res) => {
-      console.log(res.data);
-      //setData("Wylogowany");
-    });
+  const showMenu = (e) => {
+    e.target.nextElementSibling.classList.toggle("active");
+    e.target.nextElementSibling.classList.toggle("inactive");
   };
+
+  const handleClickOutsideAvatar = (event) => {
+    let avatar = document.querySelector(".user_avatar");
+    let menu = document.querySelector(".user_menu_popup");
+    if (
+      menu &&
+      !menu.contains(event.target) &&
+      !avatar.contains(event.target)
+    ) {
+      let avatarHandler = document.querySelector(".user_menu_popup");
+      avatarHandler.classList.add("inactive");
+      avatarHandler.classList.remove("active");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutsideAvatar);
+  }, []);
 
   if (location.pathname !== "/") {
     return (
@@ -46,14 +58,32 @@ const Header = (props) => {
 
         {auth.isLoggedIn && (
           <div className="user_menu">
-            <NavLink to="/" className="user_favorites">
+            <NavLink to="/favorites" className="user_favorites">
               <FontAwesomeIcon icon={faFireAlt} />
             </NavLink>
-            <div className="user-name">Hi, </div>
+            <div className="user_name">Hi, {auth.userName}</div>
             <div
-              className="user-avatar"
-              style={{ background: "../../../img/avatar.png" }}
+              className="user_avatar"
+              style={{
+                background:
+                  "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
+                backgroundPosition: "center center",
+                backgroundSize: "cover",
+              }}
+              onClick={showMenu}
             ></div>
+
+            <div className="user_menu_popup inactive">
+              <NavLink to="/editProfile" className="edit_profile">
+                Edytuj profil
+              </NavLink>
+              <Button
+                onClick={auth.logout}
+                className={"button__primary--logout"}
+              >
+                Wyloguj
+              </Button>
+            </div>
           </div>
         )}
       </div>

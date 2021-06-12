@@ -6,6 +6,8 @@ const VALIDATOR_TYPE_MAX = "MAX";
 const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_FILE = "FILE";
 const VALIDATOR_TYPE_SAMEVALUE = "SAMEVALUE";
+const VALIDATOR_TYPE_ISNUMBER = "ISNUMBER";
+const VALIDATOR_TYPE_PHONE = "PHONE";
 
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
@@ -24,6 +26,8 @@ export const VALIDATOR_SAMEVALUE = (val) => ({
   val: val,
 });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
+export const VALIDATOR_ISNUMBER = () => ({ type: VALIDATOR_TYPE_ISNUMBER });
+export const VALIDATOR_PHONE = () => ({ type: VALIDATOR_TYPE_PHONE });
 
 export const validate = (value, validators) => {
   let isValid = true;
@@ -48,6 +52,15 @@ export const validate = (value, validators) => {
     }
     if (validator.type === VALIDATOR_TYPE_SAMEVALUE) {
       isValid = isValid && value.localeCompare(validator.val) === 0;
+    }
+    if (validator.type === VALIDATOR_TYPE_ISNUMBER) {
+      let a = Number.isInteger(Number(value)) && Number(value) > 0;
+      isValid = isValid && a;
+    }
+    if (validator.type === VALIDATOR_TYPE_PHONE) {
+      let regex =
+        /^(\+{0,})(\d{0,})([(]{1}\d{1,3}[)]{0,}){0,}(\s?\d+|\+\d{2,3}\s{1}\d+|\d+){1}[\s|-]?\d+([\s|-]?\d+){1,2}(\s){0,}$/;
+      isValid = isValid && regex.test(value);
     }
   }
   return isValid;

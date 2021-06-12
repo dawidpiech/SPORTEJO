@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route, useHistory, withRouter } from "react-router-dom";
-
+import Axios from "axios";
 import Login from "./user/pages/Login";
 import Home from "./home/Home";
 import Registration from "./user/pages/Registration";
@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthContext } from "./shared/context/auth-context";
 import Favorites from "./user/pages/Favorites";
 import Dashboard from "./user/pages/Dashboard";
+import AddNewObject from "./objects/AddNewObject";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,7 +32,14 @@ const App = () => {
   const logout = () => {
     setLoggedIn(false);
     window.localStorage.removeItem("userData");
-    history.push("/");
+
+    Axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:8000/api/v1/users/logout",
+    }).then((res) => {
+      history.push("/");
+    });
   };
 
   useEffect(() => {
@@ -65,6 +73,7 @@ const App = () => {
           <Route path="/" exact component={Home} />
           <Route path="/favorites" exact component={Favorites} />
           <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/addNewObject" exact component={AddNewObject} />
           <Route component={errorPage} />
         </Switch>
       </main>

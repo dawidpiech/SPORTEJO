@@ -3,6 +3,7 @@
   margin: 1rem 0;
   color: $white;
   border: none;
+  width: 100%;
 }
 
 .form-control_wrapper label,
@@ -16,14 +17,25 @@
   margin-bottom: 0.5rem;
 }
 
-.form-control_wrapper input,
-.form-control_wrapper textarea {
+.form-control_wrapper input {
   width: 100%;
   background-color: rgba($gray, 0.1);
   border: none;
   border-radius: 30px;
   height: 50px;
   padding: 0 30px;
+}
+
+.form-control_wrapper textarea {
+  width: 100%;
+  background-color: rgba($gray, 0.1);
+  border: none;
+  border-radius: 30px;
+  padding: 20px 30px;
+}
+
+.form-control_wrapper label {
+  color: $gray;
 }
 
 .form-control_wrapper input:focus,
@@ -36,10 +48,37 @@
 .form-control_wrapper--invalid label,
 .form-control_wrapper--invalid p {
   color: red;
+  text-align: center;
 }
 
 .form-control_wrapper--invalid input,
 .form-control_wrapper--invalid textarea {
   border-color: red;
   background: #ffd1d1;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+
+  input {
+    margin: 0;
+    background-color: rosybrown;
+    width: 20px;
+    border: 23px solid transparent;
+    border-radius: 4px;
+  }
+
+  input:checked {
+    background-color: $purple;
+    border: 1px solid #34495e;
+  }
+
+  label {
+    padding-top: 15px;
+    padding-left: 20px;
+    color: $gray;
+    font-size: 10pt;
+  }
 }
