@@ -1,3 +1,14 @@
-img {
-  width: 100px;
+@import "./../../util/conf.scss";
+
+.multiple-image-upload-image {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    background: rgba($purple, 0.1);
+    border: none;
+    color: red;
+    align-self: flex-start;
+    width: 100%;
+  }
 }

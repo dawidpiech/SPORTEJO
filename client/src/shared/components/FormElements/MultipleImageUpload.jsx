@@ -1,6 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./MultipleImageUpload.scss";
 import MultipleImageViewer from "./MultipleImageViewer";
@@ -17,6 +15,7 @@ const MultipleImageUpload = (props) => {
       return;
     }
 
+    props.onInput(props.id, file, isValid);
     const handleFileChosen = async (file) => {
       return new Promise((resolve, reject) => {
         let fileReader = new FileReader();
@@ -56,7 +55,6 @@ const MultipleImageUpload = (props) => {
       picked = Array.from(event.target.files);
       for (let i = 0; i < picked.length; i++) {
         if (picked[i].size < 1000000) {
-          setFile(picked);
           setIsValid(true);
           fileIsValid = true;
         } else {
@@ -69,19 +67,22 @@ const MultipleImageUpload = (props) => {
       setIsValid(false);
       fileIsValid = false;
     }
-    props.onInput(props.id, event.target.files, fileIsValid);
+    if (fileIsValid) {
+      console.log(picked);
+      setFile(picked);
+    }
   };
-  const imageHandler = () => {
+  const imageHandler = (e) => {
+    e.preventDefault();
     imageRef.current.click();
   };
 
   const removeFile = (id) => {
-    let files = file.slice((e, index) => {
-      if (index !== id) {
-        return e;
-      }
-    });
-    console.log(files);
+    let files = file.map((e) => e);
+    files.splice(id, 1);
+    setFile(files);
+
+    props.removePhotoFromForm(id);
   };
 
   return (
@@ -97,26 +98,29 @@ const MultipleImageUpload = (props) => {
       />
 
       <div className="image_input_wrapper">
-        <Button onClick={imageHandler}>Add photos</Button>
+        <Button onClick={imageHandler} className={"image_input_button"}>
+          Dodaj zdjęcia
+        </Button>
         {preview && (
           <MultipleImageViewer
             photos={preview}
             removeFile={removeFile}
+            reorderPhotos={props.reorderPhotos}
           ></MultipleImageViewer>
         )}
         {!preview && (
-          <div>
-            <div className="icon">
-              <FontAwesomeIcon icon={faPlus} />
-            </div>
+          <div className="multiple-image-upload-container">
             <div className="title_wrapper">
-              <p className="title">Dodaj zdjęcie profilowe</p>
-              <p className="subtitle">Maksymalny rozmiar zdjęcia to 1MB</p>
+              <p className="title">Dodaj zdjęcia obiektu</p>
+              <p className="subtitle">
+                Maksymalny rozmiar pojedynczego zdjęcia to 1MB. Maksymalnie
+                możesz dodać 10 zdjęć. Musisz dodać przynajmniej jedno zdjęcie.
+              </p>
             </div>
           </div>
         )}
       </div>
-      {isValid === false && <p>{props.errorText}</p>}
+      {isValid === false && <p className="error">{props.errorText}</p>}
     </div>
   );
 };

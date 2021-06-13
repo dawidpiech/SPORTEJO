@@ -5,6 +5,7 @@ const {
   getAmenities,
   uploadPhotos,
   addObject,
+  getAllObjects,
 } = require("./../controllers/objectsController");
 
 const router = express.Router();
@@ -13,14 +14,7 @@ const router = express.Router();
 router.get("/getCategories", getCategories);
 router.get("/getDays", getDays);
 router.get("/getAmenities", getAmenities);
-router.post(
-  "/addObject",
-  uploadPhotos.array("uploadedImages", 10),
-  function (req, res) {
-    var file = req.files;
-    console.log(file);
-    res.end();
-  }
-);
+router.post("/addObject", uploadPhotos.array("uploadedImages", 10), addObject);
+router.get("/getObjects", getAllObjects);
 
 module.exports = router;

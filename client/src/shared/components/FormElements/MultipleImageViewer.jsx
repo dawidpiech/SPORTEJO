@@ -11,26 +11,30 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const grid = 8;
-
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "rgba(150, 28, 166, .6" : "#ffffff",
+
+  margin: "4px",
+  borderRadius: "10px",
+  overflow: "hidden",
+  padding: "5px",
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+  background: isDraggingOver ? "rgba(150, 28, 166, .2" : "rgba(55, 55, 55, .1)",
   display: "flex",
-  padding: grid,
   overflow: "auto",
+  padding: "8px",
+  borderRadius: "20px",
+  marginTop: "20px",
+  height: "150px",
 });
 
 class MultipleImageViewer extends Component {
@@ -65,10 +69,13 @@ class MultipleImageViewer extends Component {
     });
   }
 
+  componentDidUpdate() {
+    this.props.reorderPhotos(this.state.items);
+  }
+
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
-    console.log("render image");
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">

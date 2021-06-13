@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
 import Loader from "../shared/components/Loader/Loader";
 import "./AddNewObject.scss";
 import { useForm } from "./../shared/hooks/form-hook";
-import { Form, Col, Row } from "react-bootstrap";
+import { Form, Col, Row, Alert } from "react-bootstrap";
 import Input from "./../shared/components/FormElements/Input";
 import InputCheckbox from "./../shared/components/FormElements/InputCheckbox";
 import {
@@ -13,11 +13,13 @@ import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_ISNUMBER,
   VALIDATOR_PHONE,
+  VALIDATOR_HOUR,
 } from "./../shared/util/validators";
 import Button from "./../shared/components/FormElements/Button";
 import LoadingSpinner from "./../shared/components/others/LoadingSpinner";
 import { Multiselect } from "multiselect-react-dropdown";
 import MultipleImageUpload from "../shared/components/FormElements/MultipleImageUpload";
+import { AuthContext } from "./../shared/context/auth-context";
 
 const AddNewObject = () => {
   const [isLoading, setLoading] = useState(true);
@@ -36,7 +38,9 @@ const AddNewObject = () => {
     isTouched: false,
     data: [],
   });
+  const [addObjectState, setAddObjectState] = useState();
   const [formState, inputHandler] = useForm({}, false);
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     getDays();
@@ -46,11 +50,6 @@ const AddNewObject = () => {
       setLoading(false);
     }
   }, [amenitiesData.state, daysData.state, categoriesData.state]);
-
-  const addNewObject = (e) => {
-    e.preventDefault();
-    console.log("dział");
-  };
 
   const checked = (e) => {
     let a = [];
@@ -210,25 +209,70 @@ const AddNewObject = () => {
     },
   };
 
-  const save = () => {
-    const formData = new FormData();
+  const addNewObject = (e) => {
+    e.preventDefault();
+    setLoadingSpinner(true);
 
-    console.log(formState.inputs.uploadedImages.value.length);
+    const formData = new FormData();
 
     for (let i = 0; i < formState.inputs.uploadedImages.value.length; i++) {
       const element = formState.inputs.uploadedImages.value[i];
       formData.append("uploadedImages", element);
     }
 
+    formData.append("name", formState.inputs.object_name.value);
+    formData.append("adress", formState.inputs.adres.value);
+    formData.append("city", formState.inputs.city.value);
+    formData.append("categories", JSON.stringify(checkedCategories.data));
+    formData.append("description", formState.inputs.description.value);
+    formData.append("eMail", formState.inputs.email.value);
+    formData.append("phoneNumber", formState.inputs.phone.value);
+    formData.append("pricePerHour", formState.inputs.price.value);
+    formData.append("openingTime", formState.inputs.hourFrom.value);
+    formData.append("closingTime", formState.inputs.hourTo.value);
+    formData.append("amenities", JSON.stringify(checkedAmenities));
+    formData.append("openingDays", JSON.stringify(checkedDays.data));
+    formData.append("userID", auth.userId);
+
     Axios({
       method: "POST",
       data: formData,
+      withCredentials: true,
       url: "http://localhost:8000/api/v1/objects/addObject",
-    }).then((res) => {
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        setAddObjectState({
+          status: true,
+          message: res.data,
+        });
+        setLoadingSpinner(false);
+      })
+      .catch((error) => {
+        let message = error.response.data.slice(
+          error.response.data.search("Error: ") + 6,
+          error.response.data.search("<br>")
+        );
+        setLoadingSpinner(false);
+
+        setAddObjectState({
+          status: false,
+          message: message,
+        });
+      });
   };
 
+  const removePhotoFromForm = (index) => {
+    formState.inputs.uploadedImages.value.splice(index, 1);
+  };
+
+  const reorderPhotos = (photo) => {
+    let data = [];
+    photo.forEach((e) => {
+      data.push(formState.inputs.uploadedImages.value[e.id]);
+    });
+
+    formState.inputs.uploadedImages.value = data;
+  };
   return (
     <div className="add-new-object-wrapper">
       {isLoading ? (
@@ -275,6 +319,8 @@ const AddNewObject = () => {
                   id="uploadedImages"
                   errorText="Możesz dodać maksymalnie 10 zdjęć i nie mogą one ważyć więcej niż 1MB"
                   onInput={inputHandler}
+                  removePhotoFromForm={removePhotoFromForm}
+                  reorderPhotos={reorderPhotos}
                 ></MultipleImageUpload>
               </Col>
             </Row>
@@ -299,7 +345,11 @@ const AddNewObject = () => {
                   id="city"
                   element="input"
                   type="text"
-                  validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(250)]}
+                  validators={[
+                    VALIDATOR_REQUIRE(),
+                    VALIDATOR_MAXLENGTH(250),
+                    VALIDATOR_MINLENGTH(3),
+                  ]}
                   errorText="Proszę wprowadź miasto."
                   onInput={inputHandler}
                   placeholder="Wprowadź miasto"
@@ -339,7 +389,7 @@ const AddNewObject = () => {
                       id="hourFrom"
                       element="input"
                       type="time"
-                      validators={[VALIDATOR_REQUIRE()]}
+                      validators={[VALIDATOR_REQUIRE(), VALIDATOR_HOUR()]}
                       errorText="Proszę wprowadź prawidłową godzinę."
                       onInput={inputHandler}
                       placeholder="Wprowadź godzinę otwarcia"
@@ -350,7 +400,7 @@ const AddNewObject = () => {
                       id="hourTo"
                       element="input"
                       type="time"
-                      validators={[VALIDATOR_REQUIRE()]}
+                      validators={[VALIDATOR_REQUIRE(), VALIDATOR_HOUR()]}
                       errorText="Proszę wprowadź prawidłową godzinę."
                       onInput={inputHandler}
                       placeholder="Wprowadź godzinę zamknięcia"
@@ -492,10 +542,13 @@ const AddNewObject = () => {
               {isLoadingSpinner && <LoadingSpinner></LoadingSpinner>}
               Dodaj Obiekt
             </Button>
+            {addObjectState && (
+              <Alert variant={addObjectState.status ? "success" : "danger"}>
+                {addObjectState.message}
+              </Alert>
+            )}
           </Form.Group>
         </Form>
-
-        <Button onClick={save}>ZAPISZ</Button>
       </div>
     </div>
   );

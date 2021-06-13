@@ -1,5 +1,7 @@
 import React from "react";
 import "./Image.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Image = (props) => {
   const remove = () => {
@@ -7,9 +9,11 @@ const Image = (props) => {
   };
 
   return (
-    <div className="a">
-      <img src={props.src} alt="Preview" />
-      <button onClick={remove}>delete</button>
+    <div className="multiple-image-upload-image">
+      <img src={props.src} height="92px" alt="Preview" />
+      <button onClick={remove}>
+        <FontAwesomeIcon icon={faTrashAlt} />
+      </button>
     </div>
   );
 };

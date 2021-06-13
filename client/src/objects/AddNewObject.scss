@@ -21,12 +21,17 @@
 
     .button__primary--register {
       font-weight: 900;
+      margin-bottom: 20px;
     }
   }
 
-  .alert {
+  p.alert {
     color: red;
     text-align: center;
     width: 100%;
+  }
+
+  .alert {
+    text-align: center;
   }
 }

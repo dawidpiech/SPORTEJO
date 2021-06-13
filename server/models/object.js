@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const object = new mongoose.Schema({
+  owner: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
   name: {
     type: String,
     required: true,
@@ -20,12 +25,11 @@ const object = new mongoose.Schema({
       ref: "Category",
     },
   ],
-  photos: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  photos: {
+    type: [String],
+    required: true,
+  },
+
   description: {
     type: String,
     required: true,
@@ -42,7 +46,7 @@ const object = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  openingHour: {
+  openingTime: {
     type: String,
     required: true,
   },
