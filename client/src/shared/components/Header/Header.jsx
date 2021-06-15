@@ -65,10 +65,10 @@ const Header = (props) => {
             <div
               className="user_avatar"
               style={{
-                background:
-                  "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
                 backgroundPosition: "center center",
                 backgroundSize: "cover",
+                backgroundImage:
+                  "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
               }}
               onClick={showMenu}
             ></div>

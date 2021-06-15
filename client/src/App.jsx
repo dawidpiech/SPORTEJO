@@ -13,12 +13,14 @@ import { AuthContext } from "./shared/context/auth-context";
 import Favorites from "./user/pages/Favorites";
 import Dashboard from "./user/pages/Dashboard";
 import AddNewObject from "./objects/AddNewObject";
+import EditProfile from "./user/pages/EditProfile";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userID, setUserID] = useState("");
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [email, setEmail] = useState("");
   const history = useHistory();
 
   const login = () => {
@@ -27,6 +29,7 @@ const App = () => {
     setUserID(storedData.id);
     setName(storedData.username);
     setAvatar(storedData.avatar);
+    setEmail(storedData.email);
   };
 
   const logout = () => {
@@ -50,6 +53,7 @@ const App = () => {
       setUserID(storedData.id);
       setName(storedData.username);
       setAvatar(storedData.avatar);
+      setEmail(storedData.email);
     }
   }, []);
 
@@ -60,6 +64,7 @@ const App = () => {
         userId: userID,
         userName: name,
         avatar: avatar,
+        email: email,
         login: login,
         logout: logout,
       }}
@@ -74,6 +79,7 @@ const App = () => {
           <Route path="/favorites" exact component={Favorites} />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/addNewObject" exact component={AddNewObject} />
+          <Route path="/editProfile" exact component={EditProfile} />
           <Route component={errorPage} />
         </Switch>
       </main>

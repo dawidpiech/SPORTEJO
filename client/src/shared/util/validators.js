@@ -9,6 +9,7 @@ const VALIDATOR_TYPE_SAMEVALUE = "SAMEVALUE";
 const VALIDATOR_TYPE_ISNUMBER = "ISNUMBER";
 const VALIDATOR_TYPE_PHONE = "PHONE";
 const VALIDATOR_TYPE_HOUR = "HOUR";
+const VALIDATOR_TYPE_OLD_MAIL = "OLDMAIL";
 
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
@@ -30,6 +31,10 @@ export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
 export const VALIDATOR_ISNUMBER = () => ({ type: VALIDATOR_TYPE_ISNUMBER });
 export const VALIDATOR_PHONE = () => ({ type: VALIDATOR_TYPE_PHONE });
 export const VALIDATOR_HOUR = () => ({ type: VALIDATOR_TYPE_HOUR });
+export const VALIDATOR_OLD_EMAIL = (val) => ({
+  type: VALIDATOR_TYPE_OLD_MAIL,
+  val: val,
+});
 
 export const validate = (value, validators) => {
   let isValid = true;
@@ -67,6 +72,11 @@ export const validate = (value, validators) => {
     if (validator.type === VALIDATOR_TYPE_HOUR) {
       let regex = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/;
       isValid = isValid && regex.test(value);
+    }
+    if (validator.type === VALIDATOR_TYPE_OLD_MAIL) {
+      console.log(value);
+      console.log(validator.val);
+      isValid = isValid && value.localeCompare(validator.val) === 0;
     }
   }
   return isValid;

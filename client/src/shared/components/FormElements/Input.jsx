@@ -65,6 +65,10 @@ const Input = (props) => {
       />
     );
 
+  const clear = () => {
+    console.log("inputsRef");
+  };
+
   return (
     <div
       className={`form-control_wrapper ${

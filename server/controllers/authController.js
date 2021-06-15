@@ -1,4 +1,3 @@
-const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
@@ -96,7 +95,6 @@ const signup = async (req, res, next) => {
       "Zapisywanie w bazie danych nie powiodło się, proszę spróbuj ponownie",
       500
     );
-    console.log(err);
 
     return next(error);
   }
@@ -147,8 +145,112 @@ const logout = async (req, res) => {
   });
 };
 
+const changeEmail = async (req, res, next) => {
+  const user = await User.findOne({ _id: req.body.userID });
+  console.log(user);
+
+  if (req.body.email !== user.email) {
+    const err = new HttpError(
+      "Twój stary adres e-mail jest nieprawidłowy.",
+      500
+    );
+
+    return next(err);
+  }
+  User.findOneAndUpdate(
+    { _id: req.body.userID },
+    { email: req.body.newEmail },
+    function (error, result) {
+      if (error) {
+        const err1 = new HttpError(
+          "Użytkownik o takim adresie e-mail już istnieje jeśli to ty zaloguj się.",
+          500
+        );
+
+        const err2 = new HttpError(
+          "Zapisywanie w bazie danych nie powiodło się, proszę spróbuj ponownie",
+          500
+        );
+
+        if ((error.code = 11000)) return next(err1);
+        else {
+          return next(err2);
+        }
+      } else {
+        res.send({
+          status: true,
+          comment: "E-mail został zmieniony!",
+          email: result.email,
+        });
+      }
+    }
+  );
+};
+
+const changeAvatar = async (req, res, next) => {
+  User.findOneAndUpdate(
+    { _id: req.body.userID },
+    { avatar: req.file.filename },
+    function (error, result) {
+      if (error) {
+        const err = new HttpError(
+          "Zapisywanie w bazie danych nie powiodło się, proszę spróbuj ponownie",
+          500
+        );
+        return next(err);
+      } else {
+        res.send({
+          status: true,
+          comment: "Avatar został zmieniony!",
+          avatar: req.file.filename,
+        });
+      }
+    }
+  );
+};
+const changePassword = async (req, res, next) => {
+  const user = await User.findOne({ _id: req.body.userID });
+
+  const test = await bcrypt.compare(req.body.password, user.password);
+
+  if (req.body.newPassword !== req.body.repeatedPassword) {
+    const err = new HttpError("Powtórzone hasło jest błędne.", 500);
+
+    return next(err);
+  }
+
+  if (!test) {
+    const err = new HttpError("Wpisałeś błędne hasło.", 500);
+
+    return next(err);
+  }
+
+  User.findOneAndUpdate(
+    { _id: req.body.userID },
+    { password: await bcrypt.hash(req.body.newPassword, 12) },
+    function (error, result) {
+      if (error) {
+        const err = new HttpError(
+          "Zapisywanie w bazie danych nie powiodło się, proszę spróbuj ponownie",
+          500
+        );
+        return next(err);
+      } else {
+        res.send({
+          status: true,
+          comment: "Hasło zostało poprawnie zmienione!",
+          result: result,
+        });
+      }
+    }
+  );
+};
+
 exports.getUser = getUser;
 exports.login = login;
 exports.register = signup;
 exports.logout = logout;
 exports.uploadAvatar = uploadAvatar;
+exports.changeEmail = changeEmail;
+exports.changeAvatar = changeAvatar;
+exports.changePassword = changePassword;

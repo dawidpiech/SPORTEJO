@@ -1,0 +1,48 @@
+@import "./../../shared/util/conf.scss";
+
+.edit-profile-wrapper {
+  padding-left: 100px;
+  padding-bottom: 120px;
+  width: 100%;
+  position: relative;
+
+  @media (max-width: $mediaPhoneSize) {
+    padding-left: 0;
+  }
+
+  .title {
+    font-size: 18pt;
+    font-weight: 900;
+    color: $blue;
+    width: 350px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .subtitle {
+    margin-top: 40px;
+    font-size: 12pt;
+    font-weight: 600;
+    color: $blue;
+    width: 350px;
+    text-align: center;
+    width: 100%;
+  }
+
+  hr {
+    background: $gray;
+  }
+
+  .button-primary--edit-profile {
+    font-weight: 900;
+    margin-top: 20px;
+  }
+
+  .form {
+    min-width: 450px;
+
+    @media (max-width: $mediaPhoneSize) {
+      min-width: auto;
+    }
+  }
+}

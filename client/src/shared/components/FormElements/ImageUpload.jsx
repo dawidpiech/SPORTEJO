@@ -47,6 +47,12 @@ const ImageUpload = (props) => {
     imageRef.current.click();
   };
 
+  const clearInput = () => {
+    setPreview();
+    setFile();
+    setIsValid();
+  };
+
   return (
     <div className="image_input">
       <input
