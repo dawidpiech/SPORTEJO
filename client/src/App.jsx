@@ -14,6 +14,8 @@ import Favorites from "./user/pages/Favorites";
 import Dashboard from "./user/pages/Dashboard";
 import AddNewObject from "./objects/AddNewObject";
 import EditProfile from "./user/pages/EditProfile";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import * as Icons from "@fortawesome/free-solid-svg-icons";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,6 +24,12 @@ const App = () => {
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
   const history = useHistory();
+  const iconList = Object.keys(Icons)
+    .filter((key) => key !== "fas" && key !== "prefix")
+    .map((icon) => Icons[icon]);
+  library.add(...iconList);
+
+  console.log(iconList.faBaseballBall);
 
   const login = () => {
     const storedData = JSON.parse(localStorage.getItem("userData"));

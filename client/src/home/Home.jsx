@@ -10,10 +10,9 @@ import Axios from "axios";
 import Button from "../shared/components/FormElements/Button";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faFireAlt } from "@fortawesome/free-solid-svg-icons";
 import Category from "./components/Category";
 import { AuthContext } from "./../shared/context/auth-context";
-import { faFireAlt } from "@fortawesome/free-solid-svg-icons";
 
 import Loader from "../shared/components/Loader/Loader";
 

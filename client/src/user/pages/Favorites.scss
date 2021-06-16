@@ -1,0 +1,25 @@
+@import "./../../shared/util/conf.scss";
+
+.favorites-wrapper {
+  padding-left: 100px;
+  padding-bottom: 90px;
+  width: 100%;
+  position: relative;
+
+  @media (max-width: $mediaPhoneSize) {
+    padding-left: 0;
+  }
+
+  .title {
+    padding-top: 20px;
+    color: $blue;
+    font-size: 24pt;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  hr {
+    width: 50%;
+    background: $blue;
+  }
+}

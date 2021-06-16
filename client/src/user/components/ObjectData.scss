@@ -1,0 +1,85 @@
+@import "./../../shared//util/conf.scss";
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+.object-wrapper {
+  width: 100%;
+  min-height: 150px;
+  box-shadow: 0px 3px 6px 1px #999999;
+  margin-top: 20px;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+
+  img {
+    display: block;
+    max-height: 150px;
+    border-radius: 20px;
+    margin-right: 20px;
+  }
+
+  .object_data_wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .object_main_data {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+
+      p.object_title {
+        font-size: 18pt;
+        color: $blue;
+        font-weight: 900;
+        padding: 0;
+        margin: 0;
+      }
+
+      p.object_adres {
+        font-size: 14pt;
+        color: $gray;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .object_categories {
+        margin-top: 40px;
+        display: flex;
+
+        .category {
+          display: flex;
+          font-weight: 900;
+          margin: 0 3px;
+          color: $gray;
+
+          svg {
+            margin: 3px 5px 0 5px;
+          }
+        }
+      }
+    }
+
+    .object_others_data {
+      display: flex;
+      flex-flow: row;
+      p.price {
+        font-size: 18pt;
+        color: $blue;
+        font-weight: 900;
+      }
+
+      .favorites-icon {
+        align-self: flex-end;
+        margin-right: 20px;
+        color: $gray;
+        font-size: 20pt;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -111,9 +111,26 @@ const getAllObjects = async (req, res, next) => {
   res.send(objects);
 };
 
+const getFavoritesObject = async (req, res, next) => {
+  const user = await Object.find({ _id: req.body.userID });
+  const objects = await Object.find({ _id: user.objects });
+
+  for (const [index, object] of objects.entries()) {
+    const day = await Days.find({ _id: object.openingDays });
+    const amenities = await Amenities.find({ _id: object.amenities });
+    const categories = await Category.find({ _id: object.categories });
+
+    objects[index].openingDays = day;
+    objects[index].amenities = amenities;
+    objects[index].categories = categories;
+  }
+  res.send(objects);
+};
+
 exports.getCategories = getCategories;
 exports.getDays = getDays;
 exports.getAmenities = getAmenities;
 exports.uploadPhotos = uploadPhotos;
 exports.addObject = addObject;
 exports.getAllObjects = getAllObjects;
+exports.getFavoritesObject = getFavoritesObject;

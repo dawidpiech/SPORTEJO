@@ -6,6 +6,7 @@ const {
   uploadPhotos,
   addObject,
   getAllObjects,
+  getFavoritesObject,
 } = require("./../controllers/objectsController");
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.get("/getDays", getDays);
 router.get("/getAmenities", getAmenities);
 router.post("/addObject", uploadPhotos.array("uploadedImages", 10), addObject);
 router.get("/getObjects", getAllObjects);
+router.get("/getFavoritesObject", getFavoritesObject);
 
 module.exports = router;
