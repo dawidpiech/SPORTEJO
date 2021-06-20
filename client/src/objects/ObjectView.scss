@@ -1,0 +1,18 @@
+@import "./../shared//util/conf.scss";
+
+.object-view-wrapper {
+  position: relative;
+  padding-left: 100px;
+  padding-bottom: 90px;
+  width: 100%;
+
+  @media (max-width: $mediaPhoneSize) {
+    padding-left: 0;
+    margin-top: 0;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 400px;
+  }
+}

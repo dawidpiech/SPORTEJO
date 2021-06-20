@@ -8,7 +8,7 @@ import { faFireAlt } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "../../../shared/components/FormElements/Button";
 
-const Header = (props) => {
+const Header = () => {
   const auth = useContext(AuthContext);
   const location = useLocation();
 
@@ -74,7 +74,10 @@ const Header = (props) => {
             ></div>
 
             <div className="user_menu_popup inactive">
-              <NavLink to="/editProfile" className="edit_profile">
+              <NavLink to="/dashboard" className="user_menu_link">
+                Dashboard
+              </NavLink>
+              <NavLink to="/editProfile" className="user_menu_link">
                 Edytuj profil
               </NavLink>
               <Button

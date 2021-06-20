@@ -79,6 +79,34 @@ a {
         color: $gray;
         font-size: 20pt;
         cursor: pointer;
+
+        &:hover {
+          color: $purple;
+        }
+      }
+
+      .dashboard-icon {
+        align-self: flex-end;
+        margin-right: 20px;
+        color: $gray;
+        font-size: 20pt;
+        cursor: pointer;
+
+        &:hover {
+          color: $purple;
+        }
+      }
+
+      .object-icon {
+        align-self: flex-end;
+        margin-right: 20px;
+        color: $gray;
+        font-size: 20pt;
+        cursor: pointer;
+
+        &:hover {
+          color: $purple;
+        }
       }
     }
   }

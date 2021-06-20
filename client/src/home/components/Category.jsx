@@ -3,7 +3,7 @@ import "./Category.scss";
 import { NavLink } from "react-router-dom";
 
 const Category = (props) => (
-  <NavLink to={props.id}>
+  <NavLink to={`/search/params?category=${props.id}`}>
     <div
       className="home_category"
       style={{

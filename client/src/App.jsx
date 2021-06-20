@@ -14,6 +14,8 @@ import Favorites from "./user/pages/Favorites";
 import Dashboard from "./user/pages/Dashboard";
 import AddNewObject from "./objects/AddNewObject";
 import EditProfile from "./user/pages/EditProfile";
+import Search from "./objects/Search";
+import ObjectView from "./objects/ObjectView";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 
@@ -28,8 +30,6 @@ const App = () => {
     .filter((key) => key !== "fas" && key !== "prefix")
     .map((icon) => Icons[icon]);
   library.add(...iconList);
-
-  console.log(iconList.faBaseballBall);
 
   const login = () => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
@@ -88,6 +88,8 @@ const App = () => {
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/addNewObject" exact component={AddNewObject} />
           <Route path="/editProfile" exact component={EditProfile} />
+          <Route path="/search/:params" exact component={Search} />
+          <Route path="/object/:id" exact component={ObjectView} />
           <Route component={errorPage} />
         </Switch>
       </main>

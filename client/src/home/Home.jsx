@@ -1,14 +1,9 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-  componentDidMount,
-} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Home.scss";
 import { Row, Col, Form } from "react-bootstrap";
 import Axios from "axios";
 import Button from "../shared/components/FormElements/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faFireAlt } from "@fortawesome/free-solid-svg-icons";
 import Category from "./components/Category";
@@ -21,10 +16,11 @@ const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const auth = useContext(AuthContext);
   const categoriesData = [];
+  let history = useHistory();
 
   const submitSearch = (e) => {
     e.preventDefault();
-    window.location.href = e.target[0].value;
+    history.push(`/search/params?name=${e.target[0].value}`);
   };
 
   const getCategories = () => {
@@ -125,7 +121,10 @@ const Home = () => {
               ></div>
 
               <div className="home_user_menu inactive">
-                <NavLink to="/editProfile" className="edit_profile">
+                <NavLink to="/dashboard" className="user_menu_link">
+                  Dashboard
+                </NavLink>
+                <NavLink to="/editProfile" className="user_menu_link">
                   Edytuj profil
                 </NavLink>
                 <Button

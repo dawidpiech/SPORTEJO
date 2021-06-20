@@ -1,0 +1,66 @@
+@import "./../shared/util/conf.scss";
+
+.search-wrapper {
+  position: relative;
+  padding-left: 100px;
+  padding-bottom: 90px;
+  width: 100%;
+
+  @media (max-width: $mediaPhoneSize) {
+    padding-left: 0;
+    margin-top: 0;
+  }
+
+  .button__primary--search {
+    font-weight: 900;
+    margin: 1rem 0;
+    height: 50px;
+  }
+
+  .city {
+    display: flex;
+
+    .form-control_wrapper {
+      align-self: center;
+    }
+  }
+
+  .categories {
+    display: flex;
+
+    .search-wrapper {
+      padding: 10px;
+      align-self: center;
+    }
+  }
+
+  .params {
+    overflow: hidden;
+    transition: height 4s ease-out;
+
+    &.closed {
+      height: 0;
+    }
+
+    &.open {
+      height: auto;
+    }
+  }
+
+  .show-filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $gray;
+    cursor: pointer;
+
+    &:hover {
+      color: $purple;
+    }
+
+    span {
+      display: block;
+    }
+  }
+}

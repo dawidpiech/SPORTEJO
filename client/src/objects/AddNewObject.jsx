@@ -495,11 +495,11 @@ const AddNewObject = () => {
                 <Row>
                   <Col lg={12}>
                     <Multiselect
-                      options={categoriesData.data} // Options to display in the dropdown
-                      selectedValues={[]} // Preselected value to persist in dropdown
-                      onSelect={checkCategory} // Function will trigger on select event
-                      onRemove={removeCategory} // Function will trigger on remove event
-                      displayValue="name" // Property name to display in the dropdown options
+                      options={categoriesData.data}
+                      selectedValues={[]}
+                      onSelect={checkCategory}
+                      onRemove={removeCategory}
+                      displayValue="name"
                       style={multiselectStyles}
                       closeIcon="cancel"
                     />

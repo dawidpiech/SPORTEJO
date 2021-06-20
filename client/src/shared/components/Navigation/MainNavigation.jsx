@@ -19,7 +19,7 @@ const MainNavigation = () => (
         </NavLink>
       </li>
       <li>
-        <NavLink to="/" className={"nav__link"}>
+        <NavLink to="/search/params?" className={"nav__link"}>
           <FontAwesomeIcon icon={faSearch} />
         </NavLink>
       </li>
