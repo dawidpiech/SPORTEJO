@@ -4,4 +4,10 @@
   width: 100%;
   position: relative;
   margin-top: 100px;
+
+  .error_content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
 }

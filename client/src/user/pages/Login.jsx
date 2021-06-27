@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./Login.scss";
 import Axios from "axios";
 import Loader from "../../shared/components/Loader/Loader";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink, Redirect, useHistory } from "react-router-dom";
 import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import Button from "../../shared/components/FormElements/Button";
 import { AuthContext } from "./../../shared/context/auth-context";
@@ -24,6 +24,7 @@ const Login = () => {
     status: "",
     message: "",
   });
+  const history = useHistory();
 
   const [formState, inputHandler] = useForm(
     {
@@ -64,13 +65,14 @@ const Login = () => {
       .then(() => {
         authContext.login();
         setLoadingSpinner(false);
+      })
+      .then(() => {
+        history.push("/login");
       });
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    setLoading(false);
   }, []);
 
   if (authContext.isLoggedIn) {

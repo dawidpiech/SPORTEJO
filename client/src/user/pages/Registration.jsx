@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Registration.scss";
 import Axios from "axios";
 import Loader from "./../../shared/components/Loader/Loader";
@@ -7,7 +7,7 @@ import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import Button from "./../../shared/components/FormElements/Button";
 import ImageUpload from "./../../shared/components/FormElements/ImageUpload";
 import { useHistory } from "react-router-dom";
-
+import { AuthContext } from "./../../shared/context/auth-context";
 import { useForm } from "./../../shared/hooks/form-hook";
 import {
   VALIDATOR_REQUIRE,
@@ -47,7 +47,7 @@ const Registration = () => {
     },
     false
   );
-
+  const auth = useContext(AuthContext);
   let history = useHistory();
 
   const register = (e) => {
@@ -89,12 +89,10 @@ const Registration = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setLoading(false);
   }, []);
 
-  return (
+  return !auth.isLoggedIn ? (
     <div className="registration_wrapper">
       {isLoading ? (
         <Loader active="loader--show"></Loader>
@@ -106,7 +104,7 @@ const Registration = () => {
           <Col xl={5} className="registration_form">
             <p className="registration_form_register_link">
               Masz już konto?
-              <NavLink to="/register">Zaloguj się!</NavLink>
+              <NavLink to="/login">Zaloguj się!</NavLink>
             </p>
             <Form className="authorization__form" onSubmit={register}>
               <Form.Group>
@@ -176,6 +174,8 @@ const Registration = () => {
         </Row>
       </Container>
     </div>
+  ) : (
+    <Redirect to={{ pathname: "/dashboard" }}></Redirect>
   );
 };
 

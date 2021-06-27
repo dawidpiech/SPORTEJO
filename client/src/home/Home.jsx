@@ -15,39 +15,11 @@ const Home = () => {
   const [categories, setCategories] = useState("");
   const [isLoading, setLoading] = useState(true);
   const auth = useContext(AuthContext);
-  const categoriesData = [];
   let history = useHistory();
 
   const submitSearch = (e) => {
     e.preventDefault();
     history.push(`/search/params?name=${e.target[0].value}`);
-  };
-
-  const getCategories = () => {
-    Axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/getCategories",
-    })
-      .then((res) => {
-        res.data.forEach((e) => {
-          let c = {
-            id: e._id,
-            name: e.name,
-            background: e.photo,
-          };
-
-          categoriesData.push(c);
-        });
-      })
-      .then(() => {
-        setCategories(categoriesData);
-      })
-      .then(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      });
   };
 
   const showMenu = (e) => {
@@ -70,7 +42,36 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const categoriesData = [];
+    const getCategories = () => {
+      Axios({
+        method: "GET",
+        withCredentials: true,
+        url: "http://localhost:8000/api/v1/objects/getCategories",
+      })
+        .then((res) => {
+          res.data.forEach((e) => {
+            let c = {
+              id: e._id,
+              name: e.name,
+              background: e.photo,
+            };
+
+            categoriesData.push(c);
+          });
+        })
+        .then(() => {
+          setCategories(categoriesData);
+        })
+        .then(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        });
+    };
+
     getCategories();
+
     document.addEventListener("mousedown", handleClickOutsideAvatar);
   }, []);
 
@@ -89,17 +90,17 @@ const Home = () => {
           </div>
           <div className="home_photo_subtitle_wrapper">
             <div className="home_photo_subtitle_bg"></div>
-            <div className="home_photo_subtitle">Find place to game</div>
+            <div className="home_photo_subtitle">Znajdź miejsce do gry</div>
           </div>
         </Col>
         <Col lg={5} className="home_search">
           {!auth.isLoggedIn && (
             <div className="home_buttons">
               <NavLink to="/login">
-                <Button className="home_button">Login</Button>
+                <Button className="home_button">Zaloguj</Button>
               </NavLink>
               <NavLink to="/register">
-                <Button className="home_button">Register</Button>
+                <Button className="home_button">Zarejestruj</Button>
               </NavLink>
             </div>
           )}
@@ -108,7 +109,7 @@ const Home = () => {
               <NavLink to="/favorites" className="user_favorites">
                 <FontAwesomeIcon icon={faFireAlt} />
               </NavLink>
-              <div className="user_name">Hi, {auth.userName}</div>
+              <div className="user_name">Hej {auth.userName}</div>
               <div
                 className="user_avatar"
                 style={{
@@ -137,14 +138,14 @@ const Home = () => {
             </div>
           )}
           <div className="search_wrapper">
-            <p className="search_title">Let's go</p>
+            <p className="search_title">Zaczynajmy...</p>
             <Form className="search_form" onSubmit={submitSearch}>
               <Form.Group>
                 <Form.Control
                   type="text"
                   name="search"
                   id="search_input"
-                  placeholder="Search place"
+                  placeholder="Wyszukaj miejsce"
                 />
               </Form.Group>
               <FontAwesomeIcon icon={faSearch} className="search_icon" />

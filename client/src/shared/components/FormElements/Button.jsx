@@ -6,6 +6,8 @@ const Button = (props) => (
     className={`button__primary ${props.className}`}
     disabled={props.disabled}
     onClick={props.onClick}
+    onMouseEnter={props.onMouseEnter}
+    onMouseLeave={props.onMouseLeave}
   >
     {props.children}
   </button>

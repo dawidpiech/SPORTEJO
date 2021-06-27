@@ -21,7 +21,6 @@ const Search = () => {
   const [isLoading, setLoading] = useState(true);
   const location = useLocation();
   let history = useHistory();
-  const searchParams = queryString.parse(location.search);
   const [categoriesData, setCategoriesData] = useState([]);
   const [checkedCategories, setCheckedCategories] = useState([]);
   const [formState, inputHandler] = useForm({}, false);
@@ -154,9 +153,10 @@ const Search = () => {
   };
 
   useEffect(() => {
+    const searchParams = queryString.parse(location.search);
     getCategories();
     getItems(searchParams);
-  }, []);
+  }, [location]);
 
   return (
     <div className="search-wrapper">
@@ -240,7 +240,7 @@ const Search = () => {
             ) : (
               <Loader2 active="loader2--hide"></Loader2>
             )}
-            {objects &&
+            {objects.length > 0 &&
               objects.map((e, index) => (
                 <ObjectData
                   key={index}
@@ -248,7 +248,7 @@ const Search = () => {
                   {...e}
                 ></ObjectData>
               ))}
-            {objects === [] && (
+            {objects.length === 0 && (
               <h1>Nie znaleziono żadnych obiektów o takich kryteriach</h1>
             )}
           </Col>

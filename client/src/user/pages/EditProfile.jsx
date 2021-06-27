@@ -17,6 +17,7 @@ import {
 } from "./../../shared/util/validators";
 import Axios from "axios";
 import LoadingSpinner from "./../../shared/components/others/LoadingSpinner";
+import { Redirect } from "react-router-dom";
 
 const EditProfile = () => {
   const [isLoading, setLoading] = useState(true);
@@ -81,9 +82,7 @@ const EditProfile = () => {
   );
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setLoading(false);
   }, []);
 
   const changePassword = (e) => {
@@ -196,7 +195,7 @@ const EditProfile = () => {
       });
   };
 
-  return (
+  return auth.isLoggedIn ? (
     <div className="edit-profile-wrapper">
       {isLoading ? (
         <Loader active="loader--show"></Loader>
@@ -326,6 +325,8 @@ const EditProfile = () => {
         </Row>
       </Container>
     </div>
+  ) : (
+    <Redirect to={{ pathname: "/login" }}></Redirect>
   );
 };
 

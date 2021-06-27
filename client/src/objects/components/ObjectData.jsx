@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./ObjectData.scss";
@@ -23,6 +23,7 @@ const ObjectData = (props) => {
       <NavLink to={"/object/" + props._id}>
         <img
           src={"http://localhost:8000/uploads/objectImages/" + props.photos[0]}
+          alt={"image" + props.photos[0]}
         ></img>
       </NavLink>
       <div className="object_data_wrapper">

@@ -5,6 +5,7 @@ import Axios from "axios";
 import "./Favorites.scss";
 import ObjectData from "./../../objects/components/ObjectData";
 import { AuthContext } from "./../../shared/context/auth-context";
+import { Redirect } from "react-router-dom";
 
 const Favorites = () => {
   const [isLoading, setLoading] = useState(true);
@@ -12,28 +13,28 @@ const Favorites = () => {
   const auth = useContext(AuthContext);
 
   useEffect(() => {
-    getObjects();
-    auth.login();
-  }, []);
-
-  const getObjects = () => {
-    let data = {
-      user: auth.userId,
-    };
-    Axios({
-      method: "POST",
-      data: data,
-      withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/getFavoritesObjects",
-    })
-      .then((res) => {
-        console.log(res.data);
-        setObjects(res.data);
+    const getObjects = () => {
+      let data = {
+        user: auth.userId,
+      };
+      Axios({
+        method: "POST",
+        data: data,
+        withCredentials: true,
+        url: "http://localhost:8000/api/v1/objects/getFavoritesObjects",
       })
-      .then(() => {
-        setLoading(false);
-      });
-  };
+        .then((res) => {
+          setObjects(res.data);
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    };
+
+    if (auth.isLoggedIn) {
+      getObjects();
+    }
+  }, [auth]);
 
   const removeObjectFromFavorites = (id) => {
     let objectsList = [...objects];
@@ -56,7 +57,7 @@ const Favorites = () => {
     });
   };
 
-  return (
+  return auth.isLoggedIn ? (
     <div className="favorites-wrapper">
       {isLoading ? (
         <Loader active="loader--show"></Loader>
@@ -87,6 +88,8 @@ const Favorites = () => {
         </Row>
       </Container>
     </div>
+  ) : (
+    <Redirect to={{ pathname: "/login" }}></Redirect>
   );
 };
 

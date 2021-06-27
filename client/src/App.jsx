@@ -18,6 +18,7 @@ import Search from "./objects/Search";
 import ObjectView from "./objects/ObjectView";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import * as Icons from "@fortawesome/free-solid-svg-icons";
+require("dotenv").config();
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,16 +33,28 @@ const App = () => {
   library.add(...iconList);
 
   const login = () => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
-    setLoggedIn(true);
-    setUserID(storedData.id);
-    setName(storedData.username);
-    setAvatar(storedData.avatar);
-    setEmail(storedData.email);
+    if (localStorage.getItem("userData") !== null) {
+      const storedData = JSON.parse(localStorage.getItem("userData"));
+      setLoggedIn(true);
+      setUserID(storedData.id);
+      setName(storedData.username);
+      setAvatar(storedData.avatar);
+      setEmail(storedData.email);
+    } else {
+      setLoggedIn(false);
+      setUserID("");
+      setName("");
+      setAvatar("");
+      setEmail("");
+    }
   };
 
   const logout = () => {
     setLoggedIn(false);
+    setUserID("");
+    setName("");
+    setAvatar("");
+    setEmail("");
     window.localStorage.removeItem("userData");
 
     Axios({

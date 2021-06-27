@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import "./Header.scss";
-import Axios from "axios";
 import { NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -45,12 +44,12 @@ const Header = () => {
           <div className="buttons_header">
             <Button className={"button__primary--header"}>
               <NavLink to="/login" className={"nav__link"}>
-                Login
+                Zaloguj
               </NavLink>
             </Button>
             <Button className={"button__primary--header"}>
               <NavLink to="/register" className={"nav__link"}>
-                Register
+                Zarejestruj
               </NavLink>
             </Button>
           </div>
@@ -61,7 +60,7 @@ const Header = () => {
             <NavLink to="/favorites" className="user_favorites">
               <FontAwesomeIcon icon={faFireAlt} />
             </NavLink>
-            <div className="user_name">Hi, {auth.userName}</div>
+            <div className="user_name">Hej {auth.userName}</div>
             <div
               className="user_avatar"
               style={{

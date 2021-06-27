@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Image from "./Image";
 
-// a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -12,10 +11,8 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
   userSelect: "none",
 
-  // change background colour if dragging
   background: isDragging ? "rgba(150, 28, 166, .6" : "#ffffff",
 
   margin: "4px",
@@ -23,7 +20,6 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   overflow: "hidden",
   padding: "5px",
 
-  // styles we need to apply on draggables
   ...draggableStyle,
 });
 
@@ -53,7 +49,6 @@ class MultipleImageViewer extends Component {
   }
 
   onDragEnd(result) {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
@@ -73,8 +68,6 @@ class MultipleImageViewer extends Component {
     this.props.reorderPhotos(this.state.items);
   }
 
-  // Normally you would want to split things out into separate components.
-  // But in this example everything is just done in one place for simplicity
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>

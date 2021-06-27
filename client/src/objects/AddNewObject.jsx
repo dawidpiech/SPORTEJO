@@ -20,6 +20,7 @@ import LoadingSpinner from "./../shared/components/others/LoadingSpinner";
 import { Multiselect } from "multiselect-react-dropdown";
 import MultipleImageUpload from "../shared/components/FormElements/MultipleImageUpload";
 import { AuthContext } from "./../shared/context/auth-context";
+import { Redirect } from "react-router-dom";
 
 const AddNewObject = () => {
   const [isLoading, setLoading] = useState(true);
@@ -43,13 +44,15 @@ const AddNewObject = () => {
   const auth = useContext(AuthContext);
 
   useEffect(() => {
-    getDays();
-    getAmenities();
-    getCategories();
-    if (amenitiesData.state === true && daysData.state === true) {
-      setLoading(false);
+    if (auth.isLoggedIn) {
+      getDays();
+      getAmenities();
+      getCategories();
+      if (amenitiesData.state === true && daysData.state === true) {
+        setLoading(false);
+      }
     }
-  }, [amenitiesData.state, daysData.state, categoriesData.state]);
+  }, [amenitiesData.state, daysData.state, categoriesData.state, auth]);
 
   const checked = (e) => {
     let a = [];
@@ -89,8 +92,6 @@ const AddNewObject = () => {
         setCheckedAmenities(a);
       }
     }
-
-    console.log(a);
   };
 
   const getDays = () => {
@@ -273,7 +274,7 @@ const AddNewObject = () => {
 
     formState.inputs.uploadedImages.value = data;
   };
-  return (
+  return auth.isLoggedIn ? (
     <div className="add-new-object-wrapper">
       {isLoading ? (
         <Loader active="loader--show"></Loader>
@@ -423,7 +424,7 @@ const AddNewObject = () => {
                                 onChange={checked}
                               />
                             );
-                          }
+                          } else return "";
                         })
                       : ""}
                   </Col>
@@ -441,7 +442,7 @@ const AddNewObject = () => {
                                 onChange={checked}
                               />
                             );
-                          }
+                          } else return "";
                         })
                       : ""}
                   </Col>
@@ -469,7 +470,7 @@ const AddNewObject = () => {
                                 onChange={checked}
                               />
                             );
-                          }
+                          } else return "";
                         })
                       : ""}
                   </Col>
@@ -487,7 +488,7 @@ const AddNewObject = () => {
                                 onChange={checked}
                               />
                             );
-                          }
+                          } else return "";
                         })
                       : ""}
                   </Col>
@@ -521,7 +522,7 @@ const AddNewObject = () => {
                   type="text"
                   validators={[
                     VALIDATOR_REQUIRE(),
-                    VALIDATOR_MAXLENGTH(800),
+                    VALIDATOR_MAXLENGTH(5000),
                     VALIDATOR_MINLENGTH(100),
                   ]}
                   errorText="Proszę wprowadź opis obiektu. Opis musi się zawierać między 100, a 800 znaków."
@@ -551,6 +552,8 @@ const AddNewObject = () => {
         </Form>
       </div>
     </div>
+  ) : (
+    <Redirect to={{ pathname: "/login" }}></Redirect>
   );
 };
 

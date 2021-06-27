@@ -10,42 +10,46 @@ const MultipleImageUpload = (props) => {
   const [isValid, setIsValid] = useState();
   const imageRef = useRef();
 
-  useEffect(() => {
-    if (!file) {
-      return;
-    }
+  useEffect(
+    (props, isValid) => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (!file) {
+        return;
+      }
 
-    props.onInput(props.id, file, isValid);
-    const handleFileChosen = async (file) => {
-      return new Promise((resolve, reject) => {
-        let fileReader = new FileReader();
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-        };
-        fileReader.onerror = reject;
-        fileReader.readAsDataURL(file);
-      });
-    };
+      props.onInput(props.id, file, isValid);
+      const handleFileChosen = async (file) => {
+        return new Promise((resolve, reject) => {
+          let fileReader = new FileReader();
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+          fileReader.onerror = reject;
+          fileReader.readAsDataURL(file);
+        });
+      };
 
-    const readAllFiles = async (AllFiles) => {
-      const results = await Promise.all(
-        AllFiles.map(async (file) => {
-          const fileContents = await handleFileChosen(file);
-          return fileContents;
-        })
-      );
-      let a = results.map((e, index) => {
-        let data = {
-          id: index.toString(),
-          content: e,
-        };
-        return data;
-      });
-      setPreview(a);
-    };
+      const readAllFiles = async (AllFiles) => {
+        const results = await Promise.all(
+          AllFiles.map(async (file) => {
+            const fileContents = await handleFileChosen(file);
+            return fileContents;
+          })
+        );
+        let a = results.map((e, index) => {
+          let data = {
+            id: index.toString(),
+            content: e,
+          };
+          return data;
+        });
+        setPreview(a);
+      };
 
-    readAllFiles(file);
-  }, [file]);
+      readAllFiles(file);
+    },
+    [file]
+  );
 
   const choseImageHandler = (event) => {
     let picked;

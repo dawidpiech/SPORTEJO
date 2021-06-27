@@ -21,10 +21,9 @@ const ErrorPage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    setLoading(false);
   }, []);
+
   return (
     <div className="error_container">
       {isLoading ? (
@@ -33,8 +32,10 @@ const ErrorPage = () => {
         <Loader active="loader--hide"></Loader>
       )}
       <Row>
-        <Col lg={7} className="home_photo">
-          <h1>EROR PAGE</h1>
+        <Col>
+          <div className="error_content">
+            <h1>404! Ta strona nie istnieje.</h1>
+          </div>
         </Col>
       </Row>
     </div>

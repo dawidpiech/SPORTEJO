@@ -6,32 +6,12 @@ import { AuthContext } from "./../../shared/context/auth-context";
 import Loader from "./../../shared/components/Loader/Loader";
 import ObjectData from "./../../objects/components/ObjectData";
 import "./Dashboard.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const [objects, setObjects] = useState();
   const auth = useContext(AuthContext);
-
-  useEffect(() => {
-    getObjects();
-    auth.login();
-  }, []);
-
-  const getObjects = () => {
-    Axios({
-      method: "POST",
-      data: { user: auth.userId },
-      withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/getUserObjects",
-    })
-      .then((res) => {
-        setObjects(res.data);
-      })
-      .then(() => {
-        setLoading(false);
-      });
-  };
 
   const removeObject = (id) => {
     let objectsList = [...objects];
@@ -54,7 +34,28 @@ const Dashboard = () => {
     });
   };
 
-  return (
+  useEffect(() => {
+    const getObjects = () => {
+      Axios({
+        method: "POST",
+        data: { user: auth.userId },
+        withCredentials: true,
+        url: "http://localhost:8000/api/v1/objects/getUserObjects",
+      })
+        .then((res) => {
+          setObjects(res.data);
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    };
+
+    if (auth.isLoggedIn) {
+      getObjects();
+    }
+  }, [auth]);
+
+  return auth.isLoggedIn ? (
     <div className="dashboard-wrapper">
       {isLoading ? (
         <Loader active="loader--show"></Loader>
@@ -91,6 +92,8 @@ const Dashboard = () => {
         </Row>
       </Container>
     </div>
+  ) : (
+    <Redirect to={{ pathname: "/login" }}></Redirect>
   );
 };
 
