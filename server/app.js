@@ -23,13 +23,6 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(
-  cors({
-    origin: "https://sportejo.piech.it/", // <-- location of the react app were connecting to
-    credentials: true,
-  })
-);
-
-app.use(
   session({
     secret: "secretcode",
     resave: true,
