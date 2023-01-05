@@ -21,7 +21,7 @@ const Favorites = () => {
         method: "POST",
         data: data,
         withCredentials: true,
-        url: "http://localhost:8000/api/v1/objects/getFavoritesObjects",
+        url: "https://sportejo-production.up.railway.app/api/v1/objects/getFavoritesObjects",
       })
         .then((res) => {
           setObjects(res.data);
@@ -51,7 +51,7 @@ const Favorites = () => {
       method: "POST",
       withCredentials: true,
       data: data,
-      url: "http://localhost:8000/api/v1/objects/removeObjectFromFavorites",
+      url: "https://sportejo-production.up.railway.app/api/v1/objects/removeObjectFromFavorites",
     }).then((res) => {
       setObjects(objectsList);
     });

@@ -103,7 +103,7 @@ const AddNewObject = () => {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/getDays",
+      url: "https://sportejo-production.up.railway.app/api/v1/objects/getDays",
     })
       .then((res) => {
         res.data.forEach((e) => {
@@ -131,7 +131,7 @@ const AddNewObject = () => {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/getAmenities",
+      url: "https://sportejo-production.up.railway.app/api/v1/objects/getAmenities",
     })
       .then((res) => {
         res.data.forEach((e) => {
@@ -160,7 +160,7 @@ const AddNewObject = () => {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/getCategories",
+      url: "https://sportejo-production.up.railway.app/api/v1/objects/getCategories",
     })
       .then((res) => {
         res.data.forEach((e) => {
@@ -239,7 +239,7 @@ const AddNewObject = () => {
       method: "POST",
       data: formData,
       withCredentials: true,
-      url: "http://localhost:8000/api/v1/objects/addObject",
+      url: "https://sportejo-production.up.railway.app/api/v1/objects/addObject",
     })
       .then((res) => {
         setAddObjectState({
@@ -413,37 +413,37 @@ const AddNewObject = () => {
                   <Col lg={6} md={6}>
                     {daysData.data
                       ? daysData.data.map((d, index) => {
-                          if (index < Math.round(daysData.length / 2)) {
-                            return (
-                              <InputCheckbox
-                                key={index}
-                                name="day"
-                                id={d.id}
-                                value={d.name}
-                                label={d.name}
-                                onChange={checked}
-                              />
-                            );
-                          } else return "";
-                        })
+                        if (index < Math.round(daysData.length / 2)) {
+                          return (
+                            <InputCheckbox
+                              key={index}
+                              name="day"
+                              id={d.id}
+                              value={d.name}
+                              label={d.name}
+                              onChange={checked}
+                            />
+                          );
+                        } else return "";
+                      })
                       : ""}
                   </Col>
                   <Col lg={6} md={6}>
                     {daysData.data
                       ? daysData.data.map((d, index) => {
-                          if (index >= Math.round(daysData.length / 2)) {
-                            return (
-                              <InputCheckbox
-                                key={index}
-                                name="day"
-                                id={d.id}
-                                value={d.name}
-                                label={d.name}
-                                onChange={checked}
-                              />
-                            );
-                          } else return "";
-                        })
+                        if (index >= Math.round(daysData.length / 2)) {
+                          return (
+                            <InputCheckbox
+                              key={index}
+                              name="day"
+                              id={d.id}
+                              value={d.name}
+                              label={d.name}
+                              onChange={checked}
+                            />
+                          );
+                        } else return "";
+                      })
                       : ""}
                   </Col>
                   {!checkedDays.isValid && checkedDays.isTouched && (
@@ -459,37 +459,37 @@ const AddNewObject = () => {
                   <Col lg={6} md={6}>
                     {amenitiesData.data
                       ? amenitiesData.data.map((d, index) => {
-                          if (index < Math.round(amenitiesData.length / 2)) {
-                            return (
-                              <InputCheckbox
-                                key={index}
-                                name="amenities"
-                                id={d.id}
-                                value={d.name}
-                                label={d.name}
-                                onChange={checked}
-                              />
-                            );
-                          } else return "";
-                        })
+                        if (index < Math.round(amenitiesData.length / 2)) {
+                          return (
+                            <InputCheckbox
+                              key={index}
+                              name="amenities"
+                              id={d.id}
+                              value={d.name}
+                              label={d.name}
+                              onChange={checked}
+                            />
+                          );
+                        } else return "";
+                      })
                       : ""}
                   </Col>
                   <Col lg={6} md={6}>
                     {amenitiesData.data
                       ? amenitiesData.data.map((d, index) => {
-                          if (index >= Math.round(amenitiesData.length / 2)) {
-                            return (
-                              <InputCheckbox
-                                key={index}
-                                name="amenities"
-                                id={d.id}
-                                value={d.name}
-                                label={d.name}
-                                onChange={checked}
-                              />
-                            );
-                          } else return "";
-                        })
+                        if (index >= Math.round(amenitiesData.length / 2)) {
+                          return (
+                            <InputCheckbox
+                              key={index}
+                              name="amenities"
+                              id={d.id}
+                              value={d.name}
+                              label={d.name}
+                              onChange={checked}
+                            />
+                          );
+                        } else return "";
+                      })
                       : ""}
                   </Col>
                 </Row>

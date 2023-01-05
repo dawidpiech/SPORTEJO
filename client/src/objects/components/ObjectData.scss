@@ -2,11 +2,17 @@
 
 a {
   text-decoration: none;
+  margin-right: 10px;
+
+  @media screen and (max-width: 756px) {
+    margin-right: auto;
+  }
 
   &:hover {
     text-decoration: none;
   }
 }
+
 .object-wrapper {
   width: 100%;
   min-height: 150px;
@@ -16,17 +22,39 @@ a {
   padding: 10px;
   display: flex;
 
+
+  @media screen and (max-width: 756px) {
+    flex-direction: column;
+  }
+
+  #object_photo {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
   img {
     display: block;
-    max-height: 150px;
+    max-height: 200px;
+    max-width: 300px;
+    min-width: 250px;
     border-radius: 20px;
     margin-right: 20px;
+    width: 100%;
+    height: 100%;
+
+
+    @media screen and (max-width: 756px) {
+      max-height: none;
+      max-width: none;
+    }
   }
 
   .object_data_wrapper {
     display: flex;
     justify-content: space-between;
     width: 100%;
+
     .object_main_data {
       display: flex;
       flex-flow: column;
@@ -38,6 +66,11 @@ a {
         font-weight: 900;
         padding: 0;
         margin: 0;
+        width: 80%;
+
+        @media screen and (max-width: 756px) {
+          font-size: 12pt;
+        }
       }
 
       p.object_adres {
@@ -45,17 +78,31 @@ a {
         color: $gray;
         font-weight: 800;
         margin: 0;
+
+
+        @media screen and (max-width: 756px) {
+          font-size: 10pt;
+        }
       }
 
       .object_categories {
         margin-top: 40px;
         display: flex;
+        flex-wrap: wrap;
+
+        @media screen and (max-width: 756px) {
+          margin-top: 15px;
+        }
 
         .category {
           display: flex;
           font-weight: 900;
           margin: 0 3px;
           color: $gray;
+
+          @media screen and (max-width: 756px) {
+            font-size: 10pt;
+          }
 
           svg {
             margin: 3px 5px 0 5px;
@@ -67,10 +114,20 @@ a {
     .object_others_data {
       display: flex;
       flex-flow: row;
+
+      @media screen and (max-width: 756px) {
+        flex-flow: column;
+        min-width: 80px;
+      }
+
       p.price {
         font-size: 18pt;
         color: $blue;
         font-weight: 900;
+
+        @media screen and (max-width: 756px) {
+          font-size: 12pt;
+        }
       }
 
       .favorites-icon {

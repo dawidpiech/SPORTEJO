@@ -55,7 +55,7 @@ const ObjectView = () => {
         method: "POST",
         data: { object: id },
         withCredentials: true,
-        url: "http://localhost:8000/api/v1/objects/getObject",
+        url: "https://sportejo-production.up.railway.app/api/v1/objects/getObject",
       }).then((res) => {
         setObject(res.data);
         getLatLng(res.data.adress);
@@ -87,7 +87,7 @@ const ObjectView = () => {
                       <div
                         className="slide-image"
                         style={{
-                          backgroundImage: `url(http://localhost:8000/uploads/objectImages/${e})`,
+                          backgroundImage: `url(https://sportejo-production.up.railway.app/uploads/objectImages/${e})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center center",
                         }}

@@ -60,7 +60,7 @@ const App = () => {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:8000/api/v1/users/logout",
+      url: "https://sportejo-production.up.railway.app/api/v1/users/logout",
     }).then((res) => {
       history.push("/");
     });

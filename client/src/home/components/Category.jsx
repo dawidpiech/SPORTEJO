@@ -8,7 +8,7 @@ const Category = (props) => (
       className="home_category"
       style={{
         background:
-          "url(http://localhost:8000/images/categories/" +
+          "url(https://sportejo-production.up.railway.app/images/categories/" +
           props.background +
           ")",
         backgroundSize: "cover",

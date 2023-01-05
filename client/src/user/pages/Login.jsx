@@ -50,7 +50,7 @@ const Login = () => {
         password: formState.inputs.password.value,
       },
       withCredentials: true,
-      url: "http://localhost:8000/api/v1/users/login",
+      url: "https://sportejo-production.up.railway.app/api/v1/users/login",
     })
       .then((res) => {
         setLoginStatus({

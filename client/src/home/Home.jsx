@@ -47,7 +47,7 @@ const Home = () => {
       Axios({
         method: "GET",
         withCredentials: true,
-        url: "http://localhost:8000/api/v1/objects/getCategories",
+        url: "https://sportejo-production.up.railway.app/api/v1/objects/getCategories",
       })
         .then((res) => {
           res.data.forEach((e) => {
@@ -114,7 +114,7 @@ const Home = () => {
                 className="user_avatar"
                 style={{
                   background:
-                    "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
+                    "url(https://sportejo-production.up.railway.app/uploads/avatars/" + auth.avatar,
                   backgroundPosition: "center center",
                   backgroundSize: "cover",
                 }}
