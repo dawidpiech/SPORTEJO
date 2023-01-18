@@ -105,3 +105,6 @@ dist
 
 #images
 server/uploads
+
+#build
+client/build
