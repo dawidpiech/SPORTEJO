@@ -23,18 +23,6 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(
-  cors({
-    origin: [
-      "https://www.sportejo.piech.it/",
-      "https://sportejo.piech.it",
-      "http://localhost:3001",
-      "http://localhost:3000",
-    ], // <-- location of the react app were connecting to
-    credentials: true,
-  })
-);
-
-app.use(
   session({
     secret: "secretcode",
     resave: true,
