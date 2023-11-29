@@ -75,8 +75,6 @@ const Home = () => {
     document.addEventListener("mousedown", handleClickOutsideAvatar);
   }, []);
 
-  console.log(process.env);
-
   return (
     <div className="home_container">
       {isLoading ? (
