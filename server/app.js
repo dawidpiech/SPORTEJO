@@ -73,6 +73,9 @@ app.use(express.json({ limit: "10kb" }));
 
 app.use("/api/v1/users", authRoutes);
 app.use("/api/v1/objects", objectsRoutes);
+app.get("/", (req, res) => {
+  res.send("Hello NODE API");
+});
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
