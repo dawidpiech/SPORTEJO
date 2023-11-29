@@ -22,7 +22,11 @@ const ObjectData = (props) => {
     <div className="object-wrapper">
       <NavLink to={"/object/" + props._id} id="object_photo">
         <img
-          src={"https://sportejo-production.up.railway.app/uploads/objectImages/" + props.photos[0]}
+          src={
+            process.env.REACT_APP_API_URL +
+            "/uploads/objectImages/" +
+            props.photos[0]
+          }
           alt={"image" + props.photos[0]}
         ></img>
       </NavLink>

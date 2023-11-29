@@ -97,7 +97,7 @@ const EditProfile = () => {
         userID: auth.userId,
       },
       withCredentials: true,
-      url: "https://sportejo-production.up.railway.app/api/v1/users/changePassword",
+      url: process.env.REACT_APP_API_URL + "/api/v1/users/changePassword",
     })
       .then((res) => {
         setChangePasswordState({
@@ -130,7 +130,7 @@ const EditProfile = () => {
       method: "POST",
       data: formData,
       withCredentials: true,
-      url: "https://sportejo-production.up.railway.app/api/v1/users/changeAvatar",
+      url: process.env.REACT_APP_API_URL + "/api/v1/users/changeAvatar",
     })
       .then((res) => {
         setChangeAvatarState({
@@ -168,7 +168,7 @@ const EditProfile = () => {
         userID: auth.userId,
       },
       withCredentials: true,
-      url: "https://sportejo-production.up.railway.app/api/v1/users/changeEmail",
+      url: process.env.REACT_APP_API_URL + "/api/v1/users/changeEmail",
     })
       .then((res) => {
         setChangeEmailState({

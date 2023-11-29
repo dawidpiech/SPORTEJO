@@ -47,7 +47,7 @@ const Home = () => {
       Axios({
         method: "GET",
         withCredentials: true,
-        url: "https://sportejo-production.up.railway.app/api/v1/objects/getCategories",
+        url: process.env.REACT_APP_API_URL + "/api/v1/objects/getCategories",
       })
         .then((res) => {
           res.data.forEach((e) => {
@@ -74,6 +74,8 @@ const Home = () => {
 
     document.addEventListener("mousedown", handleClickOutsideAvatar);
   }, []);
+
+  console.log(process.env);
 
   return (
     <div className="home_container">
@@ -114,7 +116,7 @@ const Home = () => {
                 className="user_avatar"
                 style={{
                   background:
-                    "url(https://sportejo-production.up.railway.app/uploads/avatars/" + auth.avatar,
+                    "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
                   backgroundPosition: "center center",
                   backgroundSize: "cover",
                 }}

@@ -67,7 +67,7 @@ const Header = () => {
                 backgroundPosition: "center center",
                 backgroundSize: "cover",
                 backgroundImage:
-                  "url(https://sportejo-production.up.railway.app/uploads/avatars/" + auth.avatar,
+                  "url(http://localhost:8000/uploads/avatars/" + auth.avatar,
               }}
               onClick={showMenu}
             ></div>

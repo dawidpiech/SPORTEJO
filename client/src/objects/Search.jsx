@@ -86,7 +86,7 @@ const Search = () => {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "https://sportejo-production.up.railway.app/api/v1/objects/getCategories",
+      url: process.env.REACT_APP_API_URL + "/api/v1/objects/getCategories",
     })
       .then((res) => {
         res.data.forEach((e) => {
@@ -130,7 +130,7 @@ const Search = () => {
       method: "POST",
       withCredentials: true,
       data: params,
-      url: "https://sportejo-production.up.railway.app/api/v1/objects/getObjectsByParams",
+      url: process.env.REACT_APP_API_URL + "/api/v1/objects/getObjectsByParams",
     }).then((res) => {
       setTimeout(() => {
         setObjects(res.data);
@@ -148,8 +148,9 @@ const Search = () => {
       method: "POST",
       withCredentials: true,
       data: data,
-      url: "https://sportejo-production.up.railway.app/api/v1/objects/addObjectToFavorites",
-    }).then((res) => { });
+      url:
+        process.env.REACT_APP_API_URL + "/api/v1/objects/addObjectToFavorites",
+    }).then((res) => {});
   };
 
   useEffect(() => {

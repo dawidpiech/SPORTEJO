@@ -15,7 +15,7 @@ const ObjectView = () => {
   const [coordinates, setCoordinates] = useState();
   let { id } = useParams();
 
-  Geocode.setApiKey("AIzaSyBEde_WpzjOYi-A-Ha2IoIeVx37vYkunYY");
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
   const getLatLng = (adress) => {
     Geocode.fromAddress(adress).then(
@@ -55,7 +55,7 @@ const ObjectView = () => {
         method: "POST",
         data: { object: id },
         withCredentials: true,
-        url: "https://sportejo-production.up.railway.app/api/v1/objects/getObject",
+        url: process.env.REACT_APP_API_URL + "/api/v1/objects/getObject",
       }).then((res) => {
         setObject(res.data);
         getLatLng(res.data.adress);
@@ -87,7 +87,7 @@ const ObjectView = () => {
                       <div
                         className="slide-image"
                         style={{
-                          backgroundImage: `url(https://sportejo-production.up.railway.app/uploads/objectImages/${e})`,
+                          backgroundImage: `url(http://localhost:8000/uploads/objectImages/${e})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center center",
                         }}

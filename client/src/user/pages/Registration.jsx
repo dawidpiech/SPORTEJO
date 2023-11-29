@@ -64,7 +64,7 @@ const Registration = () => {
       method: "POST",
       data: formData,
       withCredentials: true,
-      url: "https://sportejo-production.up.railway.app/api/v1/users/register",
+      url: process.env.REACT_APP_API_URL + "/api/v1/users/register",
     })
       .then((res) => {
         setRegisterState({

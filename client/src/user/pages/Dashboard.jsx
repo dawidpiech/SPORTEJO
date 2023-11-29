@@ -28,7 +28,7 @@ const Dashboard = () => {
       method: "POST",
       withCredentials: true,
       data: data,
-      url: "https://sportejo-production.up.railway.app/api/v1/objects/removeObject",
+      url: process.env.REACT_APP_API_URL + "/api/v1/objects/removeObject",
     }).then((res) => {
       setObjects(objectsList);
     });
@@ -40,7 +40,7 @@ const Dashboard = () => {
         method: "POST",
         data: { user: auth.userId },
         withCredentials: true,
-        url: "https://sportejo-production.up.railway.app/api/v1/objects/getUserObjects",
+        url: process.env.REACT_APP_API_URL + "/api/v1/objects/getUserObjects",
       })
         .then((res) => {
           setObjects(res.data);

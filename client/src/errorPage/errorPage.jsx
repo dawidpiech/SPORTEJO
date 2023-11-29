@@ -14,7 +14,7 @@ const ErrorPage = () => {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "https://sportejo-production.up.railway.app/api/v1/objects/getObjects",
+      url: process.env.REACT_APP_API_URL + "/api/v1/objects/getObjects",
     }).then((res) => {
       console.log(res);
     });

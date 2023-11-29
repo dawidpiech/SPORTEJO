@@ -21,7 +21,8 @@ const Favorites = () => {
         method: "POST",
         data: data,
         withCredentials: true,
-        url: "https://sportejo-production.up.railway.app/api/v1/objects/getFavoritesObjects",
+        url:
+          process.env.REACT_APP_API_URL + "/api/v1/objects/getFavoritesObjects",
       })
         .then((res) => {
           setObjects(res.data);
@@ -51,7 +52,9 @@ const Favorites = () => {
       method: "POST",
       withCredentials: true,
       data: data,
-      url: "https://sportejo-production.up.railway.app/api/v1/objects/removeObjectFromFavorites",
+      url:
+        process.env.REACT_APP_API_URL +
+        "/api/v1/objects/removeObjectFromFavorites",
     }).then((res) => {
       setObjects(objectsList);
     });
