@@ -29,6 +29,8 @@ app.use(
       "https://sportejo.piech.it",
       "http://localhost:3001",
       "http://localhost:3000",
+      "https://sportejo.vercel.app/",
+      "https://sportejo-dawids-projects-b86c12e8.vercel.app/",
     ], // <-- location of the react app were connecting to
     credentials: true,
   })
